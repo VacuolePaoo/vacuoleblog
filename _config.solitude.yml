@@ -118,7 +118,7 @@ aside:
       img: /images/favicons/favicon-128x128.png # url
       sticker: # url, 24x24 size
     url: /about/ # link / 点击头像跳转链接
-    background: /images/site/card-background.webp # Background image(Invalid if style is 0)
+    background: /images/site/background.webp # Background image(Invalid if style is 0)
     # Content(Invalid if style is 0)
     # 内容(Style 0 无效)
     content: # 这是我的博客 / This is my Blog
@@ -127,16 +127,20 @@ aside:
     # Style 2 无效
     sayhello:
       morning: ✨ 早上好，新的一天开始了
-      noon: 🍲 午餐时间
-      afternoon: 🌞 下午好
-      night: 早点休息
-      goodnight: 晚安 😴
+      noon: 🍽️ 午餐时间！吃了吗？
+      afternoon: ☀️ 下午好，浅浅休息一下
+      night: 😉 早睡可以长高
+      goodnight: 😴 GoodNight
     # Style 2 is invalid, Triggered when sayhello is clicked.
     # Style 2 无效, 点击 sayhello 时触发
     sayhello2:
+      - 你可以的
       - 你一定可以的
       - 祝你好运
-      - 祝你每天都开心
+      - 保持乐观
+      - 收获满满
+      - 大胆去做吧
+      - 一切顺利
       # - 你可以的
       # - 你一定可以的
       # - 祝你好运，陌生人
@@ -584,7 +588,7 @@ errorpage:
 # can only use NetEase Cloud Music, QQ Music and other music platforms supported by the mainland China region,
 # the subsequent consideration of the use of JSON files to store music information and customize the implementation of the third-party API does not depend on the page.
 # Music Page
-meting_api: "https://meting.everfu.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r" # Custom API
+meting_api: "https://api.injahow.cn/meting/?server=:server&type=:type&id=:id&auth=:auth&r=:r" # Custom API
 # --------------------------- end ---------------------------
 
 # --------------------------- start ---------------------------
@@ -607,20 +611,30 @@ capsule:
 # 快捷菜单
 # 使用 shift + ? 打开
 keyboard:
-  enable: false
+  enable: true
   list:
     # - name: 关闭快捷菜单
     #   key: K
     #   func: keyboard
-    # - name: 打开控制台
-    #   key: A
-    #   sco: showConsole
-    # - name: 播放/暂停音乐
-    #   key: M
-    #   sco: musicToggle
-    # - name: 打开友链
-    #   key: L
-    #   url: /links/
+    - name: 打开控制台
+      key: A
+      sco: showConsole
+    - name: 显示/隐藏侧边栏
+      key: S
+      sco: switchHideAside
+    - name: 浅色/深色显示模式
+      key: D
+      sco: switchDarkMode
+    - name: 播放/暂停音乐
+      key: M
+      sco: musicToggle
+    - name: 文章漫游
+      key: R
+      func: toRandomPost
+    - name: 回到首页
+      key: H
+      url: /
+
 # --------------------------- end ---------------------------
 
 # --------------------------- start ---------------------------
