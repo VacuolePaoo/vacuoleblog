@@ -913,7 +913,7 @@ envelope:
 # Says Page
 # 即可短文
 says:
-  enable: false
+  enable: true
   home_mini: true
   page: /essay/
   style: 1
