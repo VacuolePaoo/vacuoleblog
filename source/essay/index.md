@@ -1,5 +1,5 @@
 ---
-title: 分享生活的小确幸
+title: 碎碎念
 date: 2023-11-01 13:43:20
 type: says
 cover: "/images/site/top.webp"
