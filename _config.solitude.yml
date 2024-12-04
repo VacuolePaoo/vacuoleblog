@@ -769,8 +769,8 @@ extends:
   # Insert in head
   # 插入到 head
   head:
+    - <script defer src="https://cloud.umami.is/script.js" data-website-id="1a3c2e77-3310-4e7a-af8f-e93c85cc9ada"></script>
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4629519_502kydvs0v.css">
-    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css">
   #  - <script src="https://cdn.bootcdn.net/ajax/libs/pace/1.2.4/pace.min.js"></script>
 
   # Insert in body
