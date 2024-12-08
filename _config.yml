@@ -27,15 +27,16 @@ abbrlink:
   drafts: false #(true)Process draft,(false)Do not process draft. false(default)
 
 algolia:
-  appId: "0B2DLJN3NZ"
-  apiKey: "f3013bcf6c9dcdd9e4258f6cf378cffb"
-  adminApiKey: "859fcb9ea14d9ffbf978859608d9fc61"
+  appId: "5920YQ45YI"
+  apiKey: "95237bd4d1a6908401a18f6b5e57cb9b"
+  adminApiKey: "9a60afb0dcdfb714d6d3f9f781ffd02d"
   chunkSize: 5000
   indexName: "blog"
   fields:
     - path
     - title
-    - content:strip
+    - permalink
+    - content:strip:truncate,0,500
 
 feed:
   type:
