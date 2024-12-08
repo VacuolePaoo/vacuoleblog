@@ -37,7 +37,8 @@ algolia:
     - title
     - permalink
     - content:strip:truncate,0,500
-
+    - tags
+    - excerpt:strip
 feed:
   type:
     - atom
