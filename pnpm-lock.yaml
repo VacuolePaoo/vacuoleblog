@@ -60,8 +60,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       hexo-solitude-tag:
-        specifier: ^1.0.21
-        version: 1.0.21
+        specifier: ^1.0.22
+        version: 1.0.22
       hexo-theme-landscape:
         specifier: ^1.0.0
         version: 1.0.0
@@ -897,8 +897,8 @@ packages:
     resolution: {integrity: sha512-u4s0ty9Aew6jV+a9oMrXBwhrRpUQ0U8PWM/88a5aHgDru58VY81mVrxOFxs788NAsWQ8OvsJtF5m7mnXoRnSIA==}
     engines: {node: '>=12.13.0'}
 
-  hexo-solitude-tag@1.0.21:
-    resolution: {integrity: sha512-5tgQy+WFfm/eqQFIoOItW7HD91ZdxhFWWBwVw/b6g3qUBrfWPBYv/JhM13zHMp62IEHZE2U/Z2KexaVt6cAPaA==}
+  hexo-solitude-tag@1.0.22:
+    resolution: {integrity: sha512-ZIbvRW0h12OeaTLnyd8QIZl8oI0r0/OciFHwcSNKU/0ENhWmMoYsS9gXVnWiW1EhfZy1eT0klm8v4cZeSg2wIw==}
     engines: {node: '>=14'}
 
   hexo-theme-landscape@1.0.0:
@@ -2666,7 +2666,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  hexo-solitude-tag@1.0.21:
+  hexo-solitude-tag@1.0.22:
     dependencies:
       hexo-util: 3.3.0
 
