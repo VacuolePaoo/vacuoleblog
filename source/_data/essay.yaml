@@ -1,6 +1,9 @@
 essay_list:
   - content: 感觉生物比地理简单
     date: 2024-12-13 23:00
+    aplayer:
+      server: netease
+      id: 1357742834
   - content: 王昌龄马
     image:
       - https://www.helloimg.com/i/2024/12/10/67571910c83dc.png
