@@ -1,4 +1,9 @@
 essay_list:
+  - content: 趁着没收费赶紧听吧
+    date: 2024-12-12 23:38:00
+    aplayer:
+      server: netease
+      id: 27681762
   - content: 感觉生物比地理简单
     date: 2024-12-13 23:00
     aplayer:
@@ -7,5 +12,6 @@ essay_list:
   - content: 王昌龄马
     image:
       - https://www.helloimg.com/i/2024/12/10/67571910c83dc.png
+    date: 2024-12-10 23:00
   - content: 第一次听钢尺叫，Duang~
     date: 2024-12-07 18:00
