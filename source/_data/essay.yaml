@@ -1,4 +1,9 @@
 essay_list:
+  - content: 高质量的问题值得思考，但是会浪费大量时间和产生内耗
+    date: 2024-12-16 06:18
+    aplayer:
+      server: netease
+      id: 28387229
   - content: 胳膊抬不起来了，是谁干的我不说
     aplayer:
       server: netease
