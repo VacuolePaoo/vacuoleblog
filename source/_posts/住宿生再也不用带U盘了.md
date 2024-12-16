@@ -1,10 +1,10 @@
 ---
-title: 在学校苦中作乐
+title: 出门在外 · 常用资源合集
 abbrlink: a6a29f53
 date: 2024-12-03 22:57:29
 tags:
-  - 软件工具
-  - 网站
+  - 软件
+  - 资源
   - 收藏夹
 categories: 资源分享
 cover: https://www.helloimg.com/i/2024/12/04/67507824c41a9.jpg
