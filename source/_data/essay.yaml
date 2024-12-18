@@ -1,4 +1,9 @@
 essay_list:
+  - content: 做完大连的数学有点自信了，你就拿这托大的来恶心我是吧
+    date: 2024-12-18 17:21
+    aplayer:
+      server: netease
+      id: 1987140328
   - content: 君子报仇十年不晚，小人找事一天到晚
     date: 2024-12-17 23:18
     aplayer:
@@ -8,6 +13,7 @@ essay_list:
     aplayer:
       server: netease
       id: 2091344982
+    date: 2024-12-15 23:00
   - content: 感觉生物比地理简单呢
     aplayer:
       server: netease
