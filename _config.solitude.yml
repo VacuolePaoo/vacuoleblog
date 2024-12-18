@@ -893,7 +893,7 @@ search:
 music:
   enable: true
   # 歌单 ID / 单曲 ID
-  id: 2648671934
+  id: 12926407087
   # 服务商：netease / qq / xiami / kugou / baidu
   server: netease
   # 类型：playlist / song
