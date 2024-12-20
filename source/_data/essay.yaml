@@ -1,4 +1,9 @@
 essay_list:
+  - content: A play with B, B play with C.
+    date: 2024-12-20
+    aplayer:
+      server: netease
+      id: 1342743435
   - content: survival of the fittest
     date: 2024-12-19 22:32
     aplayer:
