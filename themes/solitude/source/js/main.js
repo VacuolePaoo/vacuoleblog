@@ -698,7 +698,7 @@ class tabs {
     const ele = document.createElement('div');
     ele.className = 'expire';
     ele.innerHTML = `<i class="solitude fas fa-circle-exclamation"></i>${expire.text_prev}${-(expire.time - ex)}${expire.text_next}`;
-    const articleContainer = document.getElementById('article-container');
+    const articleContainer = document.querySelector('.article-container');
     articleContainer.insertAdjacentElement(expire.position === 'top' ? 'afterbegin' : 'beforeend', ele);
   }
 }
@@ -759,7 +759,7 @@ window.refreshFn = () => {
   if (covercolor.enable) coverColor();
   if (PAGE_CONFIG.toc) toc.init();
   if (lure) tabs.lureAddListener();
-
+  page === 'music' && initializeMusicPlayer();
   forPostFn();
 };
 

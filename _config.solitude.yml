@@ -735,7 +735,7 @@ wordcount: true
 # Latex formula support
 # Latex 公式支持
 katex:
-  enable: false
+  enable: true
   # Whether to load on each page
   # 是否在每个页面加载
   per_page: false
