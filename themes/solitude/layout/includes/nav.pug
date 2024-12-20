@@ -7,7 +7,7 @@ nav#nav.show
                     include ./widgets/nav/group
             a#site-name(href=url_for("/"), title=_p('nav.site_name_title'))
                 if theme.site.name.class === 'i_class'
-                    i.solitude(class=theme.site.name.custom, style="font-size: 16px;")
+                    i.solitude(class=theme.site.name.custom, style="font-size: 20px;")
                 else if theme.site.name.class === 'img'
                     img(src=theme.site.name.custom, alt=config.title)
                 else if theme.site.name.class === 'text'

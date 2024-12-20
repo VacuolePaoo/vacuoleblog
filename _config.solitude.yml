@@ -588,7 +588,7 @@ errorpage:
 # can only use NetEase Cloud Music, QQ Music and other music platforms supported by the mainland China region,
 # the subsequent consideration of the use of JSON files to store music information and customize the implementation of the third-party API does not depend on the page.
 # Music Page
-meting_api: "https://api.injahow.cn/meting/?server=:server&type=:type&id=:id&auth=:auth&r=:r" # Custom API
+meting_api: "https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r" # Custom API
 # --------------------------- end ---------------------------
 
 # --------------------------- start ---------------------------
@@ -772,6 +772,7 @@ extends:
     - <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     - <script>LA.init({id:"3KgM8DcTJ5lUj4gb",ck:"3KgM8DcTJ5lUj4gb",autoTrack:true})</script>
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4629519_502kydvs0v.css">
+    - <link rel="stylesheet" href="/css/vacuole.css">
   #  - <script src="https://cdn.bootcdn.net/ajax/libs/pace/1.2.4/pace.min.js"></script>
 
   # Insert in body
@@ -896,6 +897,8 @@ music:
   volume: 1.0
   # 是否自动播放
   mutex: true
+  # 播放顺序 random / list
+  order: list
 # --------------------------- end ---------------------------
 
 # --------------------------- start ---------------------------
@@ -929,7 +932,6 @@ recent_comments:
   limit: 50 # ⚠️waline 仅支持最大50条评论 / ⚠️waline only supports a maximum of 50 comments
   cache: 0.2 # 1 = 1天 / 1 = 1 day
   page: /recentcomments/ # 最近评论页面 / recent comments page
-  img: /img/recent_c.avif # 中控台显示图片（不填不显示） / image displayed in the console
 # --------------------------- end ---------------------------
 
 # --------------------------- start ---------------------------
@@ -989,9 +991,9 @@ google_adsense:
 # 非必要请勿修改
 CDN:
   internal: local # local / cdnjs / jsdelivr / unpkg / custom
-  third_party: cdnjs # cdnjs / jsdelivr / unpkg / custom
+  third_party: custom # cdnjs / jsdelivr / unpkg / custom
   version: true # 是否使用版本号
-  custom_format: //open.lightxi.com/cdnjs/ajax/libs/${cdnjs_name}/${version}/${min_cdnjs_file} # 自定义格式
+  custom_format: https://fastly.jsdelivr.net/npm/${name}@${version}/${min_file} # 自定义格式
   # 直接覆盖默认 CDN 链接（优先级最高）
   options:
     # algolia_search:
