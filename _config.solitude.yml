@@ -769,14 +769,8 @@ extends:
   # Insert in head
   # 插入到 head
   head:
-    - <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "peaaegb5u2");
-      </script>
-    - <script defer src="https://cloud.umami.is/script.js" data-website-id="1a3c2e77-3310-4e7a-af8f-e93c85cc9ada"></script>
+    - <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    - <script>LA.init({id:"3KgM8DcTJ5lUj4gb",ck:"3KgM8DcTJ5lUj4gb",autoTrack:true})</script>
     - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4629519_502kydvs0v.css">
   #  - <script src="https://cdn.bootcdn.net/ajax/libs/pace/1.2.4/pace.min.js"></script>
 
