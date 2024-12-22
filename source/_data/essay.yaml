@@ -1,4 +1,9 @@
 essay_list:
+  - content: 你听见敲鼓的声音了吗，是退堂鼓
+    date: 2024-12-22 12:21
+    aplayer:
+      server: netease
+      id: 2008269008
   - content: A play with B, B play with C.
     date: 2024-12-20
     aplayer:
