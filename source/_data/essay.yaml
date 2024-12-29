@@ -1,38 +1,42 @@
 essay_list:
-  - content: 你听见敲鼓的声音了吗，是退堂鼓
-    date: 2024-12-22 12:21
-    aplayer:
+  - content:
+    aplayer: 
       server: netease
-      id: 2008269008
-  - content: A play with B, B play with C.
-    date: 2024-12-20
-    aplayer:
-      server: netease
-      id: 1342743435
-  - content: survival of the fittest
-    date: 2024-12-19 22:32
-    aplayer:
-      server: netease
-      id: 35625408
-  - content: 做完大连的数学有点自信了，你就拿这托大的来恶心我是吧
-    date: 2024-12-18 17:21
-    aplayer:
-      server: netease
-      id: 1987140328
-  - content: 君子报仇十年不晚，小人找事一天到晚
-    date: 2024-12-17 23:18
-    aplayer:
-      server: netease
-      id: 2643514137
-  - content: 胳膊抬不起来了，是谁干的我不说
-    aplayer:
-      server: netease
-      id: 2091344982
-    date: 2024-12-15 23:00
-  - content: 感觉生物比地理简单呢
-    aplayer:
-      server: netease
-      id: 1424675505
-    date: 2024-12-12 23:00
-  - content: 第一次听钢尺叫，Duang~
-    date: 2024-12-07 18:00
+      id: 2074860538
+  # - content: 你听见敲鼓的声音了吗，是退堂鼓
+  #   date: 2024-12-22 12:21
+  #   aplayer:
+  #     server: netease
+  #     id: 2008269008
+  # - content: A play with B, B play with C.
+  #   date: 2024-12-20
+  #   aplayer:
+  #     server: netease
+  #     id: 1342743435
+  # - content: survival of the fittest
+  #   date: 2024-12-19 22:32
+  #   aplayer:
+  #     server: netease
+  #     id: 35625408
+  # - content: 做完大连的数学有点自信了，你就拿这托大的来恶心我是吧
+  #   date: 2024-12-18 17:21
+  #   aplayer:
+  #     server: netease
+  #     id: 1987140328
+  # - content: 君子报仇十年不晚，小人找事一天到晚
+  #   date: 2024-12-17 23:18
+  #   aplayer:
+  #     server: netease
+  #     id: 2643514137
+  # - content: 胳膊抬不起来了，是谁干的我不说
+  #   aplayer:
+  #     server: netease
+  #     id: 2091344982
+  #   date: 2024-12-15 23:00
+  # - content: 感觉生物比地理简单呢
+  #   aplayer:
+  #     server: netease
+  #     id: 1424675505
+  #   date: 2024-12-12 23:00
+  # - content: 第一次听钢尺叫，Duang~
+  #   date: 2024-12-07 18:00
