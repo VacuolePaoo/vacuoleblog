@@ -13,7 +13,7 @@ layoutStore.setAside(['blog-stats', 'blog-log'])
 
 const { data: listRaw } = await useArticleIndex()
 const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw)
-const { category, categories, listCategorized } = useCategory(listSorted)
+const { category, categories, listCategorized } = useCategory(listSorted, { bindQuery: 'category' })
 
 const listGrouped = computed(() => {
 	const groupList = Object.entries(group(
