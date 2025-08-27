@@ -15,7 +15,7 @@ const appConfig = useAppConfig()
 			<Icon :name="item.icon" class="category-icon" />
 			<span class="category-name">{{ key }}</span>
 			<span class="category-arrow">
-				<Icon name="ph:arrow-right-bold" />
+				<Icon class="category-arrow-icon" name="ph:arrow-right-bold" />
 			</span>
 		</a>
 	</div>
@@ -27,6 +27,8 @@ const appConfig = useAppConfig()
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 
 .category-item {
@@ -51,5 +53,17 @@ const appConfig = useAppConfig()
 
 .category-name {
 	flex: 1;
+}
+
+.category-arrow-icon {
+  margin-right: 0.6rem;
+	transition: transform 0.3s ease;
+	transform: translateX(-4px);
+	opacity: 0;
+}
+
+.category-item:hover .category-arrow-icon {
+	transform: translateX(0);
+	opacity: 1;
 }
 </style>
