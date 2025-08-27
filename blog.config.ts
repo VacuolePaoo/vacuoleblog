@@ -51,10 +51,10 @@ const blogConfig = {
 	scripts: [
 		// 自己网站的 Cloudflare Insights 统计服务
 		{ 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "338fdafcb6e54510a0a59dfcf78ff79e"}', 'defer': true },
-		// Microsoft Clarity 分析服务
-		{ src: 'https://www.clarity.ms/tag/t1egon13v2', defer: true, type: 'text/javascript' },
 		// Twikoo 评论系统
 		{ src: 'https://lib.baomitu.com/twikoo/1.6.44/twikoo.min.js', defer: true },
+		// Umami
+		{ 'src': 'https://cloud.umami.is/script.js', 'data-website-id': '1a3c2e77-3310-4e7a-af8f-e93c85cc9ada', 'defer': true },
 	],
 
 	// 自己部署的 Twikoo 服务
