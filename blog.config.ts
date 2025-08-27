@@ -54,6 +54,7 @@ const blogConfig = {
 		// Twikoo 评论系统
 		{ src: 'https://lib.baomitu.com/twikoo/1.6.44/twikoo.min.js', defer: true },
 		// Umami
+		{ 'src': 'https://cors.s121.top/https://cloud.umami.is/script.js', 'data-website-id': '1a3c2e77-3310-4e7a-af8f-e93c85cc9ada', 'defer': true },
 		{ 'src': 'https://cloud.umami.is/script.js', 'data-website-id': '1a3c2e77-3310-4e7a-af8f-e93c85cc9ada', 'defer': true },
 	],
 
