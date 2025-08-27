@@ -7,6 +7,7 @@ updated: 2025-08-18 03:27:42
 type: story
 categories: [杂谈]
 tags: [问题]
+image: http://image.qingshuiot.cn/avatar.jpg
 
 references:
   - title: Chrome 恶意拓展 ModHeader 分析笔记

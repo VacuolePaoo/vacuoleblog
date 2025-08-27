@@ -32,6 +32,11 @@ export default defineEventHandler(async (event) => {
 	}
 
 	for (const post of posts) {
+		// 排除 previews 文件夹的内容统计
+		if (post.path && post.path.startsWith('/previews/')) {
+			continue
+		}
+
 		stats.total.posts++
 		stats.total.words += post.readingTime?.words || 0
 
@@ -44,7 +49,7 @@ export default defineEventHandler(async (event) => {
 		}
 
 		stats.annual[year].posts++
-		stats.annual[year].words += post.readingTime?.words
+		stats.annual[year].words += post.readingTime?.words || 0
 
 		const categories = post.categories || []
 		let currentLevel = stats.categories
