@@ -24,9 +24,9 @@ const blogConfig = {
 	},
 	favicon: '/assets/favicon.ico',
 	language: 'zh-CN',
-	timeEstablished: '2019-07-19',
+	timeEstablished: '2022-07-19',
 	timezone: 'Asia/Shanghai',
-	url: 'https://blog.zhilu.site/',
+	url: 'https://blog.vacu.top',
 
 	defaultCategory: ['未分类'],
 
@@ -39,26 +39,28 @@ const blogConfig = {
 
 	imageDomains: [
 		// 自动启用本域名的 Nuxt Image
-		// 'www.zhilu.site',
-		// '7.isyangs.cn',
+		'www.zhilu.site',
+		'7.isyangs.cn',
+		'image.qingshuiot.cn',
+		'www.helloimg.com',
 	],
 
 	// 禁止搜索引擎收录的路径
 	robotsNotIndex: ['/preview', '/previews/*'],
 
 	scripts: [
-		// 自己部署的 Umami 统计服务
-		{ 'src': 'https://zhi.zhilu.cyou/zhi.js', 'data-website-id': 'a1997c81-a42b-46f6-8d1d-8fbd67a8ef41', 'defer': true },
 		// 自己网站的 Cloudflare Insights 统计服务
-		{ 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "97a4fe32ed8240ac8284e9bffaf03962"}', 'defer': true },
+		{ 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "338fdafcb6e54510a0a59dfcf78ff79e"}', 'defer': true },
+		// Microsoft Clarity 分析服务
+		{ src: 'https://www.clarity.ms/tag/t1egon13v2', defer: true, type: 'text/javascript' },
 		// Twikoo 评论系统
 		{ src: 'https://lib.baomitu.com/twikoo/1.6.44/twikoo.min.js', defer: true },
 	],
 
 	// 自己部署的 Twikoo 服务
 	twikoo: {
-		envId: 'https://twikoo.zhilu.cyou/',
-		preload: 'https://twikoo.zhilu.cyou/',
+		envId: 'https://vacuoletwikoo.netlify.app/.netlify/functions/twikoo',
+		preload: 'https://vacuoletwikoo.netlify.app/.netlify/functions/twikoo',
 	},
 }
 
