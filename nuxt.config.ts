@@ -76,6 +76,37 @@ export default defineNuxtConfig({
 		server: {
 			allowedHosts: true,
 		},
+		build: {
+			rollupOptions: {
+				onwarn(warning, defaultHandler) {
+					// 忽略已知的 terser 警告
+					if (warning.code === 'PLUGIN_WARNING' && warning.message.includes('contains an annotation that Rollup cannot interpret')) {
+						return
+					}
+					defaultHandler(warning)
+				}
+			},
+			minify: 'terser',
+			terserOptions: {
+				format: {
+					comments: false,
+				},
+				compress: {
+					drop_console: true,
+					pure_funcs: ['console.log', 'console.info', 'console.debug'],
+				},
+				mangle: true,
+			},
+		},
+	},
+
+	nitro: {
+		prerender: {
+			crawlLinks: false,
+			ignore: [
+				'/_ipx/',
+			]
+		}
 	},
 
 	// @keep-sorted

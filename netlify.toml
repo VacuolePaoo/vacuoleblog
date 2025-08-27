@@ -1,3 +1,7 @@
+[build]
+command = "pnpm run generate"
+publish = ".output/public"
+
 [context.production.environment]
 # BUG: https://github.com/nuxt/image/issues/1353
 NUXT_IMAGE_PROVIDER = "ipx"
