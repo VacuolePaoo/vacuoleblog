@@ -21,9 +21,6 @@ export default defineNuxtConfig({
 				// 思源黑体 "Noto Sans SC", 思源宋体 "Noto Serif SC", "JetBrains Mono"
 				{ rel: 'preconnect', href: 'https://fonts.gstatic.cn', crossorigin: '' },
 				{ rel: 'stylesheet', href: 'https://fonts.googleapis.cn/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap' },
-				// MiSans 字体
-				{ rel: 'stylesheet', crossorigin: 'anonymous', href: 'https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.min.css' },
-				{ rel: 'stylesheet', crossorigin: 'anonymous', href: 'https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Bold.min.css' },
 			],
 			templateParams: {
 				separator: '|',
@@ -50,6 +47,7 @@ export default defineNuxtConfig({
 		'@/assets/css/color.scss',
 		'@/assets/css/main.scss',
 		'@/assets/css/reusable.scss',
+		'@/assets/css/custom.css',
 	],
 
 	features: {
@@ -87,7 +85,7 @@ export default defineNuxtConfig({
 						return
 					}
 					defaultHandler(warning)
-				}
+				},
 			},
 			minify: 'terser',
 			terserOptions: {
@@ -108,8 +106,8 @@ export default defineNuxtConfig({
 			crawlLinks: false,
 			ignore: [
 				'/_ipx/',
-			]
-		}
+			],
+		},
 	},
 
 	// @keep-sorted
