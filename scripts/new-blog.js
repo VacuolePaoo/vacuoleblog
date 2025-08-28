@@ -42,11 +42,11 @@ tags: [标签1, 标签2]
 \n\n`, 'utf8')
 
 // 使用 VS Code 打开文件
-exec(`code "${filePath}"`, (error) => {
-	if (error) {
-		console.error(`无法打开文件: ${error.message}`)
-	}
-	else {
-		console.log(`已创建并打开 ${filePath}`)
-	}
-})
+// exec(`code "${filePath}"`, (error) => {
+// 	if (error) {
+// 		console.error(`无法打开文件: ${error.message}`)
+// 	}
+// 	else {
+// 		console.log(`已创建并打开 ${filePath}`)
+// 	}
+// })

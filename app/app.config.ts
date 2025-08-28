@@ -39,14 +39,15 @@ export default defineAppConfig({
 	// @keep-sorted
 	footer: {
 		/** 页脚版权信息，支持 <br> 换行等 HTML 标签 */
-		copyright: `© ${new Date().getFullYear()} ${blogConfig.author.name}`,
+		copyright: `© ${new Date().getFullYear()} ${blogConfig.author.name} Made with ❤️ `,
 		/** 侧边栏底部图标导航 */
 		iconNav: [
 			{ icon: 'ph:house-bold', text: '个人主页', url: blogConfig.author.homepage },
-			{ icon: 'ri:qq-line', text: '交流群: 169994096', url: 'https://jq.qq.com/?_wv=1027&k=lQfNSeEd' },
-			{ icon: 'ph:github-logo-bold', text: 'GitHub: L33Z22L11', url: 'https://github.com/L33Z22L11' },
+			{ icon: 'ri:bilibili-fill', text: 'Bilibili：液泡pao', url: 'https://space.bilibili.com/518590350' },
+			{ icon: 'ph:discord-logo-bold', text: 'Discord绳梯社区 | 600+用户', url: 'https://dc.vacu.top' },
+			{ icon: 'ph:github-logo-bold', text: 'GitHub: VacuolePaoo', url: 'https://github.com/VacuolePaoo' },
 			{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
-			{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/go-by-clouds.html' },
+			// { icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/go-by-clouds.html' },
 		] satisfies NavItem[],
 		/** 页脚站点地图 */
 		nav: [
@@ -54,23 +55,35 @@ export default defineAppConfig({
 				title: '探索',
 				items: [
 					{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
-					{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/' },
+					{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/go-by-clouds.html' },
+					{ icon: 'ph:flying-saucer-bold', text: '异次元旅行', url: 'https://travel.moe/go.html?travel=on' },
+				],
+			},
+			{
+				title: '页面',
+				items: [
+					{ text: '留言', url: '/comment', icon: 'ph:chats-teardrop-bold' },
+					{ text: '友链', url: '/link', icon: 'ph:link-bold' },
+					{ text: '打赏', url: '/donate', icon: 'ph:money-bold' }
 				],
 			},
 			{
 				title: '社交',
 				items: [
-					{ icon: 'ph:github-logo-bold', text: 'L33Z22L11', url: 'https://github.com/L33Z22L11' },
-					{ icon: 'ri:qq-line', text: '群: 169994096', url: 'https://jq.qq.com/?_wv=1027&k=lQfNSeEd' },
+					{ icon: 'ant-design:bilibili-outlined', text: 'Bilibili', url: 'https://space.bilibili.com/518590350' },
+					{ icon: 'ph:discord-logo-bold', text: 'LadderHub', url: 'https://dc.vacu.top' },
+					{ icon: 'ph:github-logo-bold', text: 'VacuolePaoo', url: 'https://github.com/VacuolePaoo' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
 				],
 			},
 			{
 				title: '信息',
 				items: [
-					{ icon: 'simple-icons:nuxtdotjs', text: 'Nuxt开源博客主题', url: 'https://github.com/L33Z22L11/blog-v3' },
-					{ icon: 'ph:swatches-bold', text: '主题和组件文档', url: '/theme' },
-					{ icon: 'ph:certificate-bold', text: '陕ICP备2025072742号-3', url: 'https://beian.miit.gov.cn/' },
+					{ text: '隐私政策', url: '/privacy', icon: 'ph:shield-check-bold' },
+					{ text: 'Cookies', url: '/cookies', icon: 'ph:cookie-bold' },
+					{ text: '版权声明', url: '/copyright', icon: 'ph:copyleft-bold' },
+					{ icon: 'ph:bird-bold', text: '关于主题', url: '/theme' },
+					{ text: '技术架构', url: '/arch', icon: 'ph:dev-to-logo-bold' },
 				],
 			},
 		] satisfies Nav,
