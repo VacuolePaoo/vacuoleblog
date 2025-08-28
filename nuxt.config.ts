@@ -50,6 +50,7 @@ export default defineNuxtConfig({
 		'@/assets/css/color.scss',
 		'@/assets/css/main.scss',
 		'@/assets/css/reusable.scss',
+		'@/assets/css/custom.css',
 	],
 
 	features: {
@@ -87,7 +88,11 @@ export default defineNuxtConfig({
 						return
 					}
 					defaultHandler(warning)
+<<<<<<< HEAD
 				}
+=======
+				},
+>>>>>>> 08b1d72cd81c2868d69a30459789a752c5e23296
 			},
 			minify: 'terser',
 			terserOptions: {
@@ -108,8 +113,13 @@ export default defineNuxtConfig({
 			crawlLinks: false,
 			ignore: [
 				'/_ipx/',
+<<<<<<< HEAD
 			]
 		}
+=======
+			],
+		},
+>>>>>>> 08b1d72cd81c2868d69a30459789a752c5e23296
 	},
 
 	// @keep-sorted

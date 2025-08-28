@@ -62,9 +62,9 @@ export default defineAppConfig({
 			{
 				title: '页面',
 				items: [
-					{ text: '留言', url: '/comment', icon: 'ph:chats-teardrop-bold' },
 					{ text: '友链', url: '/link', icon: 'ph:link-bold' },
-					{ text: '打赏', url: '/donate', icon: 'ph:money-bold' }
+					{ text: '留言', url: '/comment', icon: 'ph:chats-teardrop-bold' },
+					{ text: '打赏', url: '/donate', icon: 'ph:hand-heart-bold' },
 				],
 			},
 			{
