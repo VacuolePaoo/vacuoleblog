@@ -92,11 +92,11 @@ export default defineAppConfig({
 
 	/** 左侧栏顶部 Logo */
 	header: {
-		logo: 'https://weavatar.com/avatar/47c0f2e82b76d9b10eb3023df9e02e4e3fdbeaf5b74b842063f207971e7fbe7b?s=160',
+		logo: 'http://image.qingshuiot.cn/avatar.jpg',
 		/** 展示标题文本，否则展示纯 Logo */
 		showTitle: true,
 		subtitle: blogConfig.subtitle,
-		emojiTail: ['📄', '🦌', '🙌', '🐟', '🏖️'],
+		emojiTail: ['\\o\/', '🙌', '😭', '🙌', '\\o\/'],
 	},
 
 	/** 左侧栏导航 */
@@ -121,9 +121,9 @@ export default defineAppConfig({
 
 	stats: {
 		/** 归档页面每年标题对应的年龄 */
-		birthYear: 2003,
+		birthYear: 2009,
 		/** blog-stats widget 的预置文本 */
-		wordCount: '约10万',
+		wordCount: '114514',
 	},
 
 	themes: {
