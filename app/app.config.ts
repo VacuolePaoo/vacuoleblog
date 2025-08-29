@@ -62,9 +62,9 @@ export default defineAppConfig({
 			{
 				title: '页面',
 				items: [
-					{ text: '友链', url: '/link', icon: 'ph:link-bold' },
-					{ text: '留言', url: '/comment', icon: 'ph:chats-teardrop-bold' },
-					{ text: '打赏', url: '/donate', icon: 'ph:hand-heart-bold' },
+					{ icon: 'ph:link-bold', text: '友链', url: '/link' },
+					{ icon: 'ph:chats-teardrop-bold', text: '留言', url: '/comment' },
+					{ icon: 'ph:hand-heart-bold', text: '打赏', url: '/donate' },
 				],
 			},
 			{
@@ -80,11 +80,11 @@ export default defineAppConfig({
 			{
 				title: '信息',
 				items: [
-					{ text: '隐私政策', url: '/privacy', icon: 'ph:shield-check-bold' },
-					{ text: 'Cookies', url: '/cookies', icon: 'ph:cookie-bold' },
-					{ text: '版权声明', url: '/copyright', icon: 'ph:copyleft-bold' },
+					{ icon: 'ph:shield-check-bold', text: '隐私政策', url: '/privacy' },
+					{ icon: 'ph:cookie-bold', text: 'Cookies', url: '/cookies' },
+					{ icon: 'ph:copyleft-bold', text: '版权声明', url: '/copyright' },
 					{ icon: 'ph:bird-bold', text: '关于主题', url: '/theme' },
-					{ text: '技术架构', url: '/arch', icon: 'ph:dev-to-logo-bold' },
+					{ icon: 'ph:dev-to-logo-bold', text: '技术架构', url: '/arch' },
 				],
 			},
 		] satisfies Nav,
