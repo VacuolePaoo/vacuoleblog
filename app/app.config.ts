@@ -71,8 +71,9 @@ export default defineAppConfig({
 				title: '社交',
 				items: [
 					{ icon: 'ant-design:bilibili-outlined', text: 'Bilibili', url: 'https://space.bilibili.com/518590350' },
+					{ icon: 'ph:wechat-logo-bold', text: 'VacuolePao', url: '/' },
+					{ icon: 'ph:github-logo-bold', text: 'Github', url: 'https://github.com/VacuolePaoo' },
 					{ icon: 'ph:discord-logo-bold', text: 'LadderHub', url: 'https://dc.vacu.top' },
-					{ icon: 'ph:github-logo-bold', text: 'VacuolePaoo', url: 'https://github.com/VacuolePaoo' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
 				],
 			},
