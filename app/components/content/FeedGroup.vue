@@ -67,8 +67,6 @@ function getCardDelay(feed: FeedEntry) {
 	&::selection, :hover > & {
 		color: #4b4b4b;
 		text-shadow: 0 0 8px var(--c-text-3);
-		transition: 0.2s;
-		margin-bottom: -0.2em;
 		-webkit-text-stroke: 0;
 	}
 }
