@@ -56,6 +56,7 @@ export default defineAppConfig({
 				items: [
 					{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
 					{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/go-by-clouds.html' },
+					{ icon: 'ph:binoculars-bold', text: '发现博客', url: 'https://bf.zzxworld.com/' },
 					{ icon: 'ph:flying-saucer-bold', text: '异次元旅行', url: 'https://travel.moe/go.html?travel=on' },
 				],
 			},
@@ -65,6 +66,7 @@ export default defineAppConfig({
 					{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 					{ icon: 'ph:chats-teardrop-bold', text: '留言', url: '/comment' },
 					{ icon: 'ph:hand-heart-bold', text: '打赏', url: '/donate' },
+					{ icon: 'ph:note-bold', text: '说说', url: '/moment' },
 				],
 			},
 			{

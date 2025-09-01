@@ -5,6 +5,8 @@ const appConfig = useAppConfig()
 
 // 从feeds中随机选择4个友链
 const randomFeeds = ref<any[]>([])
+const hitokoto = ref('')
+const showHitokoto = ref(false)
 
 // 初始化随机友链
 function initializeRandomFeeds() {
@@ -24,8 +26,23 @@ function initializeRandomFeeds() {
 	randomFeeds.value = shuffled.slice(0, 4)
 }
 
+// 获取一言
+async function fetchHitokoto() {
+	try {
+		const response = await fetch('https://v1.hitokoto.cn/?encode=text')
+		hitokoto.value = await response.text()
+		showHitokoto.value = true
+	}
+	catch (error) {
+		console.error('获取一言失败:', error)
+		hitokoto.value = '暂无法获取一言...'
+		showHitokoto.value = true
+	}
+}
+
 // 页面加载时初始化
 initializeRandomFeeds()
+fetchHitokoto()
 
 // 刷新随机友链
 function refreshFeeds() {
@@ -54,7 +71,7 @@ function refreshFeeds() {
 		<div class="footer-nav-group">
 			<h3>
 				友链
-				<button class="refresh-button" @click="refreshFeeds" aria-label="刷新">
+				<button aria-label="刷新" class="refresh-button" title="刷新友链" @click="refreshFeeds">
 					<Icon name="ph:arrow-clockwise-bold" />
 				</button>
 			</h3>
@@ -74,6 +91,9 @@ function refreshFeeds() {
 		</div>
 	</nav>
 	<p v-html="appConfig.footer.copyright" />
+	<p class="hitokoto" :class="{ 'hitokoto-fade-in': showHitokoto }">
+		{{ hitokoto }}
+	</p>
 </footer>
 </template>
 
@@ -131,6 +151,25 @@ function refreshFeeds() {
 
 	p {
 		margin: 0.5em;
+	}
+
+	.hitokoto-fade-in {
+		animation: fade-in 0.5s ease-in-out;
+	}
+
+	.hitokoto {
+		color: var(--c-text-3);
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 }
 </style>

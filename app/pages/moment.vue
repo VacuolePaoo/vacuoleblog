@@ -1,6 +1,29 @@
 <script setup lang="ts">
 import { getPostDate } from '~/utils/time'
-import { getImgUrl } from '../utils/img'
+
+// 定义说说数据类型
+interface Moment {
+	text: string
+	image: string[]
+	time: number
+	views: string | null
+}
+
+// 格式化文本，将换行符转换为 <br> 标签
+function formatText(text: string) {
+	return text.replace(/\n/g, '<br>')
+}
+
+// 提取哔哩哔哩视频ID
+function extractBilibiliId(text: string) {
+	const match = text.match(/https?:\/\/(www\.)?bilibili\.com\/video\/(BV\w+)/)
+	return match ? match[2] : null
+}
+
+// 移除文本中的哔哩哔哩链接
+function removeBilibiliLink(text: string) {
+	return text.replace(/https?:\/\/(www\.)?bilibili\.com\/video\/(BV\w+)/g, '').trim()
+}
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -10,14 +33,6 @@ useSeoMeta({
 
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-log'])
-
-// 定义说说数据类型
-interface Moment {
-	text: string
-	image: string[]
-	time: number
-	views: string | null
-}
 
 // 获取说说数据
 const { data: moments, pending, error } = await useAsyncData(
@@ -35,27 +50,35 @@ const { data: moments, pending, error } = await useAsyncData(
 
 			// 过滤掉 views 为 null 的说说
 			const filteredMoments: Moment[] = data.ChannelMessageData.filter(
-				(moment: any) => moment.views !== null && moment.views !== undefined,
+				(moment: any) => {
+					return moment.views !== null && moment.views !== undefined
+				},
 			)
 
 			// 按时间倒序排列（最新的在前面）
-			return filteredMoments.sort((a: Moment, b: Moment) => b.time - a.time)
+			return filteredMoments.sort((a: Moment, b: Moment) => {
+				return b.time - a.time
+			})
 		}
 		catch (err) {
 			console.error('获取说说数据失败:', err)
 			return []
 		}
 	},
-	{
-		default: () => [],
-	},
+	// {
+	// 	default: function() {
+	// 		return [],
+	// 	},
+	// },
 )
 </script>
 
 <template>
 <div class="moment-page">
 	<div class="moment-header text-center">
-		<h1>说说</h1>
+		<h1 class="text-creative">
+			说说
+		</h1>
 		<p>记录生活中的点点滴滴</p>
 	</div>
 
@@ -75,6 +98,7 @@ const { data: moments, pending, error } = await useAsyncData(
 				v-for="(moment, index) in moments"
 				:key="index"
 				class="moment-item card"
+				:style="{ '--delay': `${index * 0.05}s` }"
 			>
 				<div class="moment-content">
 					<div class="moment-meta">
@@ -82,31 +106,40 @@ const { data: moments, pending, error } = await useAsyncData(
 							<img
 								:src="appConfig.author.avatar"
 								:alt="appConfig.author.name"
-								width="32"
-								height="32"
 							>
 						</div>
 						<div class="moment-info">
-							<div class="moment-author">{{ appConfig.author.name }}</div>
-							<div class="moment-time">{{ getPostDate(new Date(moment.time)) }}</div>
-						</div>
-						<div class="moment-views">
-							<Icon name="ph:eye-bold" />
-							{{ moment.views }}
+							<div class="moment-author">
+								{{ appConfig.author.name }}
+							</div>
+							<div class="moment-time">
+								{{ getPostDate(new Date(moment.time)) }}
+							</div>
 						</div>
 					</div>
 
-					<div v-if="moment.text" class="moment-text">
-						{{ moment.text }}
+					<!-- 文本内容 -->
+					<div v-if="moment.text && !extractBilibiliId(moment.text)" class="moment-text" v-html="formatText(moment.text)" />
+					<!-- 有视频时的文本内容（移除链接） -->
+					<div v-else-if="moment.text && extractBilibiliId(moment.text)" class="moment-text" v-html="formatText(removeBilibiliLink(moment.text))" />
+
+					<!-- 哔哩哔哩视频 -->
+					<div v-if="extractBilibiliId(moment.text)" class="moment-video">
+						<VideoEmbed
+							:id="extractBilibiliId(moment.text) || ''"
+							type="bilibili"
+							:ratio="16 / 9"
+						/>
 					</div>
 
-					<div v-if="moment.image && moment.image.length > 0" class="moment-images">
+					<!-- 图片内容 -->
+					<div v-if="moment.image && moment.image.length > 0 && !extractBilibiliId(moment.text)" class="moment-images">
 						<div
-							v-for="(img, index) in moment.image"
-							:key="index"
+							v-for="(img, imgIndex) in moment.image"
+							:key="imgIndex"
 							class="moment-image"
 						>
-							<img :src="getImgUrl(img, true)" :alt="`图片${index + 1}`" loading="lazy">
+							<Pic :src="img" :caption="`图片${imgIndex + 1}`" :zoom="true" />
 						</div>
 					</div>
 				</div>
@@ -124,6 +157,7 @@ const { data: moments, pending, error } = await useAsyncData(
 <style lang="scss" scoped>
 .moment-page {
 	margin: 1rem;
+	animation: float-in 0.3s backwards;
 }
 
 .moment-header {
@@ -131,7 +165,7 @@ const { data: moments, pending, error } = await useAsyncData(
 	text-align: center;
 
 	h1 {
-		font-size: 1.8rem;
+		font-size: 2.5rem;
 		margin-bottom: 0.25rem;
 	}
 
@@ -171,7 +205,7 @@ const { data: moments, pending, error } = await useAsyncData(
 
 .moment-item {
 	transition: all 0.3s ease;
-	animation: float-in 0.3s ease;
+	animation: float-in 0.3s var(--delay) backwards;
 
 	&:hover {
 		transform: translateY(-2px);
@@ -191,9 +225,9 @@ const { data: moments, pending, error } = await useAsyncData(
 
 .moment-avatar {
 	img {
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
+		width: 48px;
+		height: 48px;
+		border-radius: 25%;
 		object-fit: cover;
 	}
 }
@@ -227,6 +261,10 @@ const { data: moments, pending, error } = await useAsyncData(
 	white-space: pre-wrap;
 	word-break: break-word;
 	font-size: 0.95rem;
+}
+
+.moment-video {
+	margin: 1rem 0;
 }
 
 .moment-images {
@@ -273,7 +311,7 @@ const { data: moments, pending, error } = await useAsyncData(
 		grid-template-columns: repeat(2, 1fr);
 		gap: 0.3rem;
 	}
-	
+
 	.moment-image img {
 		height: 100px;
 	}
