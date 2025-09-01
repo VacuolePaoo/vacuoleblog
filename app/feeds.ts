@@ -33,4 +33,21 @@ export default [
 			},
 		],
 	},
+	{
+		name: '网上邻居',
+		entries: [
+			{
+				author: 'kzhik',
+				desc: 'EXPLORE THE WORLD!',
+				link: 'https://www.kzhik.cn',
+				title: 'kzhik’s website',
+				avatar: 'https://www.kzhik.cn/avatar.webp',
+				icon: getFavicon('www.kzhik.cn'),
+				date: '2025-09-01',
+				archs: ['Nuxt', '虚拟主机'],
+				comment: '自主设计，交互有趣的独立博客。',
+				feed: 'https://www.kzhik.cn/resources/rss.xml',
+			},
+		],
+	},
 ] satisfies FeedGroup[]
