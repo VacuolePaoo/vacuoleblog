@@ -75,20 +75,13 @@ const { data: moments, pending, error } = await useAsyncData(
 
 <template>
 <div class="moment-page">
-	<div class="moment-header text-center">
-		<h1 class="text-creative">
-			说说
-		</h1>
-		<p>记录生活中的点点滴滴</p>
-	</div>
-
 	<div v-if="pending" class="loading text-center">
 		<Icon name="svg-spinners:bars-scale-fade" />
 		<span>加载中...</span>
 	</div>
 
 	<div v-else-if="error" class="error text-center">
-		<Icon name="ph:x-circle-bold" />
+		<Icon name="ph:chat-slash-bold" />
 		<span>加载失败，请稍后重试</span>
 	</div>
 
@@ -101,26 +94,9 @@ const { data: moments, pending, error } = await useAsyncData(
 				:style="{ '--delay': `${index * 0.05}s` }"
 			>
 				<div class="moment-content">
-					<div class="moment-meta">
-						<div class="moment-avatar">
-							<img
-								:src="appConfig.author.avatar"
-								:alt="appConfig.author.name"
-							>
-						</div>
-						<div class="moment-info">
-							<div class="moment-author">
-								{{ appConfig.author.name }}
-							</div>
-							<div class="moment-time">
-								{{ getPostDate(new Date(moment.time)) }}
-							</div>
-						</div>
-					</div>
-
 					<!-- 文本内容 -->
 					<div v-if="moment.text && !extractBilibiliId(moment.text)" class="moment-text" v-html="formatText(moment.text)" />
-					<!-- 有视频时的文本内容（移除链接） -->
+					<!-- 有视频时的文本内容 -->
 					<div v-else-if="moment.text && extractBilibiliId(moment.text)" class="moment-text" v-html="formatText(removeBilibiliLink(moment.text))" />
 
 					<!-- 哔哩哔哩视频 -->
@@ -142,6 +118,10 @@ const { data: moments, pending, error } = await useAsyncData(
 							<Pic :src="img" :caption="`图片${imgIndex + 1}`" :zoom="true" />
 						</div>
 					</div>
+					<!-- 时间 -->
+					<div class="moment-time">
+						{{ getPostDate(new Date(moment.time)) }}
+					</div>
 				</div>
 			</div>
 		</TransitionGroup>
@@ -155,26 +135,13 @@ const { data: moments, pending, error } = await useAsyncData(
 </template>
 
 <style lang="scss" scoped>
+// 页面容器样式
 .moment-page {
-	margin: 1rem;
+	padding: 2rem 1rem;
 	animation: float-in 0.3s backwards;
 }
 
-.moment-header {
-	margin-bottom: 1rem;
-	text-align: center;
-
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 0.25rem;
-	}
-
-	p {
-		color: var(--c-text-2);
-		font-size: 0.9rem;
-	}
-}
-
+// 加载、错误和空状态的通用样式
 .loading, .error, .empty {
 	display: flex;
 	flex-direction: column;
@@ -183,26 +150,31 @@ const { data: moments, pending, error } = await useAsyncData(
 	padding: 2rem 1rem;
 	gap: 0.8rem;
 
+	// 状态图标样式
 	.iconify {
 		font-size: 2.5rem;
 		opacity: 0.5;
 	}
 
+	// 状态文本样式
 	span {
 		font-size: 1rem;
 	}
 }
 
+// 错误状态的特殊样式
 .error {
 	color: var(--c-danger);
 }
 
+// 说说列表容器样式
 .moment-list {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 }
 
+// 单个说说项目样式
 .moment-item {
 	transition: all 0.3s ease;
 	animation: float-in 0.3s var(--delay) backwards;
@@ -212,67 +184,34 @@ const { data: moments, pending, error } = await useAsyncData(
 	}
 }
 
+// 说说内容区域样式
 .moment-content {
-	padding: 1rem;
+	padding: 1.2rem 1.4rem;
 }
 
-.moment-meta {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	margin-bottom: 0.75rem;
-}
-
-.moment-avatar {
-	img {
-		width: 48px;
-		height: 48px;
-		border-radius: 25%;
-		object-fit: cover;
-	}
-}
-
-.moment-info {
-	flex: 1;
-
-	.moment-author {
-		font-weight: 600;
-		margin-bottom: 0.1rem;
-		font-size: 0.95rem;
-	}
-
-	.moment-time {
-		font-size: 0.8rem;
-		color: var(--c-text-2);
-	}
-}
-
-.moment-views {
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-	font-size: 0.8rem;
-	color: var(--c-text-2);
-}
-
+// 说说文本内容样式
 .moment-text {
-	margin-bottom: 0.75rem;
+	margin-bottom: 0.5rem;
 	line-height: 1.5;
 	white-space: pre-wrap;
 	word-break: break-word;
 	font-size: 0.95rem;
 }
 
+// 视频容器样式
 .moment-video {
 	margin: 1rem 0;
 }
 
+// 图片列表容器样式
 .moment-images {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 	gap: 0.4rem;
+	margin-bottom: 0.75rem;
 }
 
+// 单张图片容器样式
 .moment-image {
 	img {
 		width: 100%;
@@ -288,20 +227,31 @@ const { data: moments, pending, error } = await useAsyncData(
 	}
 }
 
-.moment-float-in-enter-active {
-	transition: all 0.3s ease;
+// 发布时间样式
+.moment-time {
+	font-size: 0.8rem;
+	color: var(--c-text-2);
+	text-align: right;
 }
 
-.moment-float-in-enter-from {
-	opacity: 0;
-	transform: translateY(15px);
+// 说说项目入场动画样式
+.moment-float-in {
+	&-enter-active {
+		transition: all 0.3s ease;
+	}
+
+	&-enter-from {
+		opacity: 0;
+		transform: translateY(15px);
+	}
+
+	&-enter-to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
-.moment-float-in-enter-to {
-	opacity: 1;
-	transform: translateY(0);
-}
-
+// 移动端响应式样式
 @media (max-width: 768px) {
 	.moment-content {
 		padding: 0.75rem;
