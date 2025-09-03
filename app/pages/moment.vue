@@ -90,7 +90,7 @@ const { data: moments, pending, error } = await useAsyncData(
 			<div
 				v-for="(moment, index) in moments"
 				:key="index"
-				class="moment-item card"
+				class="moment-item moment-card"
 				:style="{ '--delay': `${index * 0.05}s` }"
 			>
 				<div class="moment-content">
@@ -178,9 +178,33 @@ const { data: moments, pending, error } = await useAsyncData(
 .moment-item {
 	transition: all 0.3s ease;
 	animation: float-in 0.3s var(--delay) backwards;
+}
 
-	&:hover {
-		transform: translateY(-2px);
+.moment-card {
+	display: block;
+	border-radius: 0.8rem;
+	overflow: hidden;
+	background-color: var(--ld-bg-card);
+	border: 1px solid var(--c-border);
+	position: relative;
+	background: no-repeat 100% / 400%;
+	box-shadow:	0 4px 20px #a3a3a326;
+	z-index: 0;
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 2px;
+		transition: all 1s;
+		z-index: -1;
+	}
+
+	&:hover, &.active {
+		background-position: 0;
+
+		&::before {
+			transition: all 0.2s;
+		}
 	}
 }
 
@@ -195,12 +219,7 @@ const { data: moments, pending, error } = await useAsyncData(
 	line-height: 1.5;
 	white-space: pre-wrap;
 	word-break: break-word;
-	font-size: 0.95rem;
-}
-
-// 视频容器样式
-.moment-video {
-	margin: 1rem 0;
+	font-size: 16px;
 }
 
 // 图片列表容器样式
@@ -214,11 +233,8 @@ const { data: moments, pending, error } = await useAsyncData(
 // 单张图片容器样式
 .moment-image {
 	img {
-		width: 100%;
-		height: 120px;
+		width: 24px;
 		object-fit: cover;
-		border-radius: 0.375rem;
-		cursor: pointer;
 		transition: transform 0.2s;
 
 		&:hover {
@@ -229,7 +245,7 @@ const { data: moments, pending, error } = await useAsyncData(
 
 // 发布时间样式
 .moment-time {
-	font-size: 0.8rem;
+	font-size: 12px;
 	color: var(--c-text-2);
 	text-align: right;
 }
@@ -254,7 +270,7 @@ const { data: moments, pending, error } = await useAsyncData(
 // 移动端响应式样式
 @media (max-width: 768px) {
 	.moment-content {
-		padding: 0.75rem;
+		padding: 1rem;
 	}
 
 	.moment-images {
