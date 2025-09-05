@@ -60,6 +60,18 @@ export default [
 				comment: '自主设计，交互有趣的独立博客。',
 				feed: 'https://www.kzhik.cn/resources/rss.xml',
 			},
+			{
+				author: 'PlatyHsu',
+				sitenick: 'neverland',
+				desc: 'Editor. Currently at SSPAI.',
+				link: 'https://hsu.cy/',
+				feed: 'https://hsu.cy/feed.xml',
+				icon: getFavicon('hsu.cy'),
+				avatar: 'https://cdnfile.sspai.com/2024/01/19/2e1141e8de2022c94ea9dd8b805f877c.png?imageMogr2/auto-orient/thumbnail/!200x200r/gravity/center/crop/200x200/format/webp/ignore-error/1',
+				archs: ['Hugo', 'Cloudflare'],
+				date: '2025-09-03',
+				comment: '长期记录多领域内容，涵盖数码产品软件配置、文艺作品品论等，兼具技术实践与观点分享。',
+			},
 		],
 	},
 ] satisfies FeedGroup[]

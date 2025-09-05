@@ -9,30 +9,30 @@ export default defineAppConfig({
 	// 将 blog.config 中的配置项复制到 appConfig，方便调用
 	...blogConfig,
 
-	article: {
-		categories: <{ [category: string]: { icon: string, color?: string } }>{
-			经验分享: { icon: 'ph:mouse-bold', color: '#3af' },
-			杂谈: { icon: 'ph:chat-bold', color: '#3ba' },
-			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
-			代码: { icon: 'ph:code-bold', color: '#77f' },
-			未分类: { icon: 'ph:folder-dotted-bold' },
+	component: {
+		alert: {
+			/** 默认使用卡片风格还是扁平风格 */
+			defaultStyle: 'card' as 'card' | 'flat',
 		},
-		defaultCategoryIcon: 'ph:folder-bold',
-		/** 分类排序方式，键为排序字段，值为显示名称 */
-		order: {
-			date: '创建日期',
-			updated: '更新日期',
-			// title: '标题',
-		},
-	},
 
-	content: {
-		/** 代码块自动折叠触发行数 */
-		codeblockCollapsibleRows: 16,
+		codeblock: {
+			/** 代码块触发折叠的行数 */
+			triggerRows: 32,
+			/** 代码块折叠后的行数 */
+			collapsedRows: 16,
+		},
+
 		/** 文章开头摘要 */
 		excerpt: {
 			animation: true,
 			caret: '_',
+		},
+
+		stats: {
+			/** 归档页面每年标题对应的年龄 */
+			birthYear: 2003,
+			/** blog-stats widget 的预置文本 */
+			wordCount: '约10万',
 		},
 	},
 
