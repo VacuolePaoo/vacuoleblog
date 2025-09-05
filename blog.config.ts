@@ -1,6 +1,4 @@
-import type { NitroConfig } from 'nitropack'
 import type { FeedEntry } from './app/types/feed'
-import redirectList from './redirects.json'
 
 export { zhCN as dateLocale } from 'date-fns/locale/zh-CN'
 
@@ -28,10 +26,33 @@ const blogConfig = {
 	timezone: 'Asia/Shanghai',
 	url: 'https://blog.vacu.top',
 
-	defaultCategory: ['未分类'],
+// 存储 nuxt.config 和 app.config 共用的配置
+// 此处为启动时需要的配置，启动后可变配置位于 app/app.config.ts
+// @keep-sorted
+const blogConfig = {
+	...basicConfig,
 
-	feed: {
-		limit: 50,
+	article: {
+		categories: {
+			[basicConfig.defaultCategory]: { icon: 'ph:folder-dotted-bold' },
+			经验分享: { icon: 'ph:mouse-bold', color: '#3af' },
+			杂谈: { icon: 'ph:chat-bold', color: '#3ba' },
+			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
+			代码: { icon: 'ph:code-bold', color: '#77f' },
+		},
+		defaultCategoryIcon: 'ph:folder-bold',
+		/** 分类排序方式，键为排序字段，值为显示名称 */
+		order: {
+			date: '创建日期',
+			updated: '更新日期',
+			// title: '标题',
+		},
+		/** 使用 pnpm new 新建文章时自动生成自定义链接（permalink/abbrlink） */
+		useRandomPremalink: false,
+		/** 隐藏基于文件路由（不是自定义链接）的 URL /post 路径前缀 */
+		hidePostPrefix: true,
+		/** 禁止搜索引擎收录的路径 */
+		robotsNotIndex: ['/preview', '/previews/*'],
 	},
 
 	// 在 URL 中隐藏的路径前缀
@@ -48,6 +69,7 @@ const blogConfig = {
 	// 禁止搜索引擎收录的路径
 	robotsNotIndex: ['/preview', '/previews/*'],
 
+	/** 向 <head> 中添加脚本 */
 	scripts: [
 		// 自己网站的 Cloudflare Insights 统计服务
 		{ 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "338fdafcb6e54510a0a59dfcf78ff79e"}', 'defer': true },
@@ -58,15 +80,15 @@ const blogConfig = {
 		{ 'src': 'https://cloud.umami.is/script.js', 'data-website-id': '1a3c2e77-3310-4e7a-af8f-e93c85cc9ada', 'defer': true },
 	],
 
-	// 自己部署的 Twikoo 服务
+	/** 自己部署的 Twikoo 服务 */
 	twikoo: {
 		envId: 'https://vacuoletwikoo.netlify.app/.netlify/functions/twikoo',
 		preload: 'https://vacuoletwikoo.netlify.app/.netlify/functions/twikoo',
 	},
 }
 
-// 用于生成 OPML 和友链页面配置
-export const myFeed = <FeedEntry>{
+/** 用于生成 OPML 和友链页面配置 */
+export const myFeed: FeedEntry = {
 	author: blogConfig.author.name,
 	sitenick: '部落格',
 	title: blogConfig.title,
@@ -78,24 +100,6 @@ export const myFeed = <FeedEntry>{
 	archs: ['Nuxt', 'Netlify'],
 	date: blogConfig.timeEstablished,
 	comment: '高中牲畜，技术好友，爱好折腾。',
-}
-
-// 将旧页面永久重定向到新页面
-const redirectRouteRules = Object.entries(redirectList)
-	.reduce<NitroConfig['routeRules']>((acc, [from, to]) => {
-		acc![from] = { redirect: { to, statusCode: 301 } }
-		return acc
-	}, {})
-
-// https://nitro.build/config#routerules
-// 使用 EdgeOne 部署时，需要同步更新 edgeone.json
-// @keep-sorted
-export const routeRules = <NitroConfig['routeRules']>{
-	...redirectRouteRules,
-	'/api/stats': { prerender: true, headers: { 'Content-Type': 'application/json' } },
-	'/atom.xml': { prerender: true, headers: { 'Content-Type': 'application/xml' } },
-	'/favicon.ico': { redirect: { to: blogConfig.favicon } },
-	'/zhilu.opml': { prerender: true, headers: { 'Content-Type': 'application/xml' } },
 }
 
 export default blogConfig
