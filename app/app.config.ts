@@ -30,9 +30,9 @@ export default defineAppConfig({
 
 		stats: {
 			/** 归档页面每年标题对应的年龄 */
-			birthYear: 2003,
+			birthYear: 2009,
 			/** blog-stats widget 的预置文本 */
-			wordCount: '约10万',
+			wordCount: '114514',
 		},
 	},
 
@@ -94,7 +94,7 @@ export default defineAppConfig({
 
 	/** 左侧栏顶部 Logo */
 	header: {
-		logo: 'http://image.qingshuiot.cn/avatar.jpg',
+		logo: 'https://www.helloimg.com/i/2025/08/31/68b33ae5c6366.jpg',
 		/** 展示标题文本，否则展示纯 Logo */
 		showTitle: true,
 		subtitle: blogConfig.subtitle,
@@ -120,13 +120,6 @@ export default defineAppConfig({
 		sortOrder: 'date' as const,
 		/** 允许（普通/预览/归档）文章列表正序，开启后排序方式左侧图标可切换顺序 */
 		allowAscending: false,
-	},
-
-	stats: {
-		/** 归档页面每年标题对应的年龄 */
-		birthYear: 2009,
-		/** blog-stats widget 的预置文本 */
-		wordCount: '114514',
 	},
 
 	themes: {
