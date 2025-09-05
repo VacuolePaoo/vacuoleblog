@@ -17,6 +17,7 @@
 	--ld-bg-card: var(--c-bg-3);
 	--ld-bg-active: var(--c-primary-soft);
 	--ld-shadow: var(--c-bg-a50);
+	--v-card-shadow: #2a2a2a77;
 }
 
 :root,
@@ -41,6 +42,7 @@
 	--ld-bg-card: var(--c-bg);
 	--ld-bg-active: var(--c-bg);
 	--ld-shadow: var(--c-bg-soft);
+	--v-card-shadow: #9a9a9a2f;
 
 	color-scheme: light dark;
 }

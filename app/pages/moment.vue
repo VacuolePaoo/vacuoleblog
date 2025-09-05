@@ -65,19 +65,14 @@ const { data: moments, pending, error } = await useAsyncData(
 			return []
 		}
 	},
-	// {
-	// 	default: function() {
-	// 		return [],
-	// 	},
-	// },
 )
 </script>
 
 <template>
 <div class="moment-page">
 	<div v-if="pending" class="loading text-center">
-		<Icon name="svg-spinners:bars-scale-fade" />
-		<span>加载中...</span>
+		<Icon name="ph:hourglass-medium-bold" />
+		<span>正在拉取TGTalk数据...</span>
 	</div>
 
 	<div v-else-if="error" class="error text-center">
@@ -188,7 +183,7 @@ const { data: moments, pending, error } = await useAsyncData(
 	border: 1px solid var(--c-border);
 	position: relative;
 	background: no-repeat 100% / 400%;
-	box-shadow:	0 4px 20px #a3a3a326;
+	box-shadow:	0 4px 20px var(--v-card-shadow);
 	z-index: 0;
 
 	&::before {
@@ -211,6 +206,7 @@ const { data: moments, pending, error } = await useAsyncData(
 // 说说内容区域样式
 .moment-content {
 	padding: 1.2rem 1.4rem;
+	font-family: LXGW Bright;
 }
 
 // 说说文本内容样式
@@ -247,7 +243,7 @@ const { data: moments, pending, error } = await useAsyncData(
 .moment-time {
 	font-size: 12px;
 	color: var(--c-text-2);
-	text-align: right;
+	// text-align: right;
 }
 
 // 说说项目入场动画样式
