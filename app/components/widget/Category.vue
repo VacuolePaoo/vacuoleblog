@@ -1,12 +1,21 @@
 <script setup lang="ts">
+import blogConfig from '~~/blog.config'
+
 const appConfig = useAppConfig()
+
+// 过滤掉默认分类
+const filteredCategories = computed(() => {
+	const categories = { ...appConfig.article.categories }
+	delete categories[blogConfig.defaultCategory]
+	return categories
+})
 </script>
 
 <template>
 <ZWidget card title="专栏">
 	<div class="category-list">
 		<a
-			v-for="(item, key) in appConfig.article.categories"
+			v-for="(item, key) in filteredCategories"
 			:key="key"
 			class="category-item"
 			:href="`/archive?category=${encodeURIComponent(key)}`"
@@ -27,8 +36,8 @@ const appConfig = useAppConfig()
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
+	padding-top: 0.4rem;
+	padding-bottom: 0.4rem;
 }
 
 .category-item {
@@ -37,13 +46,13 @@ const appConfig = useAppConfig()
 	gap: 0.5rem;
 	padding: 0.5rem;
 	border-radius: 0.5rem;
-	color: var(--c-text-2);
 	text-decoration: none;
+	color: var(--c-text-2);
 	transition: all 0.2s;
 
 	&:hover {
-		color: var(--category-color, var(--c-primary));
 		background-color: var(--c-bg-soft);
+		color: var(--category-color, var(--c-primary));
 	}
 }
 
@@ -56,14 +65,14 @@ const appConfig = useAppConfig()
 }
 
 .category-arrow-icon {
-  margin-right: 0.6rem;
-	transition: transform 0.3s ease;
-	transform: translateX(-4px);
 	opacity: 0;
+	margin-right: 0.6rem;
+	transform: translateX(-4px);
+	transition: transform 0.3s ease;
 }
 
 .category-item:hover .category-arrow-icon {
-	transform: translateX(0);
 	opacity: 1;
+	transform: translateX(0);
 }
 </style>
