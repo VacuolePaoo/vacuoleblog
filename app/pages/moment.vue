@@ -32,7 +32,7 @@ useSeoMeta({
 })
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'blog-log'])
+layoutStore.setAside(['blog-stats', 'comm-group'])
 
 // 获取说说数据
 const { data: moments, pending, error } = await useAsyncData(
@@ -66,6 +66,37 @@ const { data: moments, pending, error } = await useAsyncData(
 		}
 	},
 )
+
+// 滚动到评论区并填充内容
+function scrollToCommentsAndQuote(moment: Moment, event: Event) {
+	event.preventDefault()
+
+	// 获取纯文本内容（移除B站链接）
+	let textToQuote = moment.text
+	if (extractBilibiliId(textToQuote)) {
+		textToQuote = removeBilibiliLink(textToQuote)
+	}
+
+	// 滚动到评论区
+	const commentsElement = document.getElementById('comments')
+	if (commentsElement) {
+		commentsElement.scrollIntoView({ behavior: 'smooth' })
+
+		// 等待滚动完成后填充内容
+		setTimeout(() => {
+			const textarea = document.querySelector('.tk-input .el-textarea__inner') as HTMLTextAreaElement
+			if (textarea) {
+				// 使用>进行Markdown引用格式
+				textarea.value = `> ${textToQuote}\n\n`
+				textarea.focus()
+
+				// 触发input事件使Twikoo能够检测到内容变化
+				const inputEvent = new Event('input', { bubbles: true })
+				textarea.dispatchEvent(inputEvent)
+			}
+		}, 500) // 等待滚动完成
+	}
+}
 </script>
 
 <template>
@@ -118,14 +149,23 @@ const { data: moments, pending, error } = await useAsyncData(
 						{{ getPostDate(new Date(moment.time)) }}
 					</div>
 				</div>
+				<!-- 评论按钮 -->
+				<a
+					href="#comments"
+					class="comment-button"
+					title="快捷评论"
+					@click="scrollToCommentsAndQuote(moment, $event)"
+				>
+					<Icon name="mingcute:comment-line" />
+				</a>
 			</div>
 		</TransitionGroup>
 	</div>
-
 	<div v-else class="empty text-center">
 		<Icon name="ph:chat-centered-dots-bold" />
 		<span>暂无说说内容</span>
 	</div>
+	<PostComment id="comments" />
 </div>
 </template>
 
@@ -200,6 +240,11 @@ const { data: moments, pending, error } = await useAsyncData(
 		&::before {
 			transition: all 0.2s;
 		}
+
+		.comment-button {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 }
 
@@ -242,8 +287,6 @@ const { data: moments, pending, error } = await useAsyncData(
 .moment-time {
 	font-size: 12px;
 	color: var(--c-text-2);
-
-	// text-align: right;
 }
 
 // 说说项目入场动画样式
@@ -260,6 +303,36 @@ const { data: moments, pending, error } = await useAsyncData(
 	&-enter-to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+
+// 评论按钮样式
+.comment-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	opacity: 0;
+	inset: auto 1rem 1rem auto;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid var(--c-border);
+	border-radius: 50%;
+	background-color: var(--c-bg-1);
+	color: var(--c-text-2);
+	transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+	z-index: 1;
+
+	&:hover {
+		opacity: 1;
+		border-color: var(--c-primary);
+		background-color: var(--c-bg-2);
+		color: var(--c-primary);
+		transform: translateY(0);
+	}
+
+	.iconify {
+		font-size: 1.2rem;
 	}
 }
 
