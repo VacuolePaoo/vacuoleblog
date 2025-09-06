@@ -142,13 +142,13 @@ const { data: moments, pending, error } = await useAsyncData(
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 2rem 1rem;
 	gap: 0.8rem;
+	padding: 2rem 1rem;
 
 	// 状态图标样式
 	.iconify {
-		font-size: 2.5rem;
 		opacity: 0.5;
+		font-size: 2.5rem;
 	}
 
 	// 状态文本样式
@@ -177,13 +177,13 @@ const { data: moments, pending, error } = await useAsyncData(
 
 .moment-card {
 	display: block;
-	border-radius: 0.8rem;
-	overflow: hidden;
-	background-color: var(--ld-bg-card);
-	border: 1px solid var(--c-border);
 	position: relative;
+	overflow: hidden;
+	border: 1px solid var(--c-border);
+	border-radius: 0.8rem;
+	box-shadow: 0 4px 20px var(--v-card-shadow);
 	background: no-repeat 100% / 400%;
-	box-shadow:	0 4px 20px var(--v-card-shadow);
+	background-color: var(--ld-bg-card);
 	z-index: 0;
 
 	&::before {
@@ -206,16 +206,15 @@ const { data: moments, pending, error } = await useAsyncData(
 // 说说内容区域样式
 .moment-content {
 	padding: 1.2rem 1.4rem;
-	font-family: LXGW Bright;
 }
 
 // 说说文本内容样式
 .moment-text {
 	margin-bottom: 0.5rem;
+	font-size: 16px;
 	line-height: 1.5;
 	white-space: pre-wrap;
-	word-break: break-word;
-	font-size: 16px;
+	word-wrap: break-word;
 }
 
 // 图片列表容器样式
@@ -230,8 +229,8 @@ const { data: moments, pending, error } = await useAsyncData(
 .moment-image {
 	img {
 		width: 24px;
-		object-fit: cover;
 		transition: transform 0.2s;
+		object-fit: cover;
 
 		&:hover {
 			transform: scale(1.03);
@@ -243,6 +242,7 @@ const { data: moments, pending, error } = await useAsyncData(
 .moment-time {
 	font-size: 12px;
 	color: var(--c-text-2);
+
 	// text-align: right;
 }
 

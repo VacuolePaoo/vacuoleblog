@@ -3,7 +3,7 @@
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "[yaml]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
@@ -26,5 +26,7 @@
   "vue.inlayHints.inlineHandlerLeading": true,
   "vue.inlayHints.missingProps": true,
   "vue.inlayHints.vBindShorthand": true,
-  "yaml.format.singleQuote": true
+  "yaml.format.singleQuote": true,
+  "editor.fontLigatures": true,
+  "editor.mouseWheelZoom": true
 }
