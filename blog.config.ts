@@ -18,7 +18,7 @@ const basicConfig = {
 		name: '署名-非商业性使用-相同方式共享 4.0 国际',
 		url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans',
 	},
-	favicon: '/assets/favicon.ico',
+	favicon: 'https://blog.vacu.top/assets/favicon.ico',
 	language: 'zh-CN',
 	timeEstablished: '2021-07-31',
 	timezone: 'Asia/Shanghai',

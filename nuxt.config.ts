@@ -54,7 +54,6 @@ export default defineNuxtConfig({
 		'@/assets/css/font.scss',
 		'@/assets/css/main.scss',
 		'@/assets/css/reusable.scss',
-		'@/assets/css/custom.css',
 	],
 
 	features: {
@@ -94,37 +93,6 @@ export default defineNuxtConfig({
 		},
 		server: {
 			allowedHosts: true,
-		},
-		build: {
-			rollupOptions: {
-				onwarn(warning, defaultHandler) {
-					// 忽略已知的 terser 警告
-					if (warning.code === 'PLUGIN_WARNING' && warning.message.includes('contains an annotation that Rollup cannot interpret')) {
-						return
-					}
-					defaultHandler(warning)
-				},
-			},
-			minify: 'terser',
-			terserOptions: {
-				format: {
-					comments: false,
-				},
-				compress: {
-					drop_console: true,
-					pure_funcs: ['console.log', 'console.info', 'console.debug'],
-				},
-				mangle: true,
-			},
-		},
-	},
-
-	nitro: {
-		prerender: {
-			crawlLinks: true,
-			ignore: [
-				'/_ipx/',
-			],
 		},
 	},
 
@@ -180,8 +148,8 @@ ${packageJson.homepage}
 			}
 			// 在 URL 中隐藏文件路由自动生成的 /posts 路径前缀
 			if (blogConfig.article.hidePostPrefix) {
-				const realPath = ctx.content.path as string
-				ctx.content.path = realPath.replace(/^\/posts/, '')
+				const realPath = ctx.content.path as string | undefined
+				ctx.content.path = realPath?.replace(/^\/posts/, '')
 			}
 		},
 	},
@@ -216,5 +184,15 @@ ${packageJson.homepage}
 		name: blogConfig.title,
 		url: blogConfig.url,
 		defaultLocale: blogConfig.language,
+	},
+
+	nitro: {
+		prerender: {
+			crawlLinks: true,
+			ignore: [
+				'/_ipx/',
+				'/_ipx/*',
+			],
+		},
 	},
 })
