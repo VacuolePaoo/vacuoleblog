@@ -125,14 +125,7 @@ export default defineNuxtConfig({
 			ignore: [
 				'/_ipx/',
 			],
-			routes: [
-				'/',
-				'/archive',
-				'/link',
-			],
 		},
-		static: true,
-		preset: 'static',
 	},
 
 	// @keep-sorted
