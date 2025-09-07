@@ -121,11 +121,18 @@ export default defineNuxtConfig({
 
 	nitro: {
 		prerender: {
-			crawlLinks: false,
+			crawlLinks: true,
 			ignore: [
 				'/_ipx/',
 			],
+			routes: [
+				'/',
+				'/archive',
+				'/link',
+			],
 		},
+		static: true,
+		preset: 'static',
 	},
 
 	// @keep-sorted
