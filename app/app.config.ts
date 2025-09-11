@@ -66,6 +66,7 @@ export default defineAppConfig({
 					{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 					{ icon: 'ph:hand-heart-bold', text: '打赏', url: '/donate' },
 					{ icon: 'ph:note-bold', text: '说说', url: '/moment' },
+					{ icon: 'ph:hard-drives-bold', text: '服务状态', url: '/status' },
 				],
 			},
 			{
