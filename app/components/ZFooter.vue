@@ -29,7 +29,7 @@ function initializeRandomFeeds() {
 // 获取一言
 async function fetchHitokoto() {
 	try {
-		const response = await fetch('https://v1.hitokoto.cn/?encode=text')
+		const response = await fetch('https://international.v1.hitokoto.cn/?encode=text')
 		hitokoto.value = await response.text()
 		showHitokoto.value = true
 	}
