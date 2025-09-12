@@ -47,6 +47,7 @@ export const ciIcons: Record<string, string> = {
 /** 主域名图标映射 */
 // @keep-sorted
 const mainDomainIcons: Record<string, string> = {
+	'apple.com': 'ri:apple-fill',
 	'bilibili.com': 'ri:bilibili-fill',
 	'creativecommons.org': 'ri:creative-commons-line',
 	'github.com': 'ri:github-fill',
@@ -54,6 +55,7 @@ const mainDomainIcons: Record<string, string> = {
 	'google.cn': 'ri:google-fill',
 	'google.com': 'ri:google-fill',
 	'microsoft.com': 'ri:microsoft-fill',
+	'mozilla.org': 'ri:firefox-fill',
 	'netlify.app': 'simple-icons:netlify',
 	'pages.dev': 'simple-icons:cloudflare',
 	'qq.com': 'ri:qq-fill',

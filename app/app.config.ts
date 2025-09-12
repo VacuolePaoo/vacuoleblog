@@ -83,7 +83,7 @@ export default defineAppConfig({
 				items: [
 					{ icon: 'ph:shield-check-bold', text: '隐私政策', url: '/privacy' },
 					{ icon: 'ph:cookie-bold', text: 'Cookies', url: '/cookies' },
-					{ icon: 'ph:copyleft-bold', text: '版权声明', url: '/copyright' },
+					{ icon: 'ph:copyleft-bold', text: '版权协议', url: '/license' },
 					{ icon: 'ph:bird-bold', text: '关于主题', url: '/theme' },
 					{ icon: 'ph:dev-to-logo-bold', text: '技术架构', url: '/arch' },
 				],
