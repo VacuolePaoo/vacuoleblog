@@ -54,6 +54,7 @@ export default defineNuxtConfig({
 		'@/assets/css/font.scss',
 		'@/assets/css/main.scss',
 		'@/assets/css/reusable.scss',
+		'@/assets/css/feeds-admin.scss', // 添加 feeds-admin.scss
 	],
 
 	features: {
