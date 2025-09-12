@@ -26,7 +26,7 @@ export default [
 				desc: '一个什么都可能会写的博客',
 				link: 'https://s121.top/',
 				icon: getFavicon('s121.top'),
-				avatar: 'https://www.helloimg.com/i/2025/09/05/68baf804edb2a.jpg',
+				avatar: 'https://s2.loli.net/2025/08/05/BlGVZfYgOuEqAL7.jpg',
 				archs: ['Hexo', 'Netlify'],
 				date: '2025-08-29',
 				comment: '同龄好友，技术大佬。',
