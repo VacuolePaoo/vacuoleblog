@@ -1,3 +1,4 @@
+import type { FeedGroup } from '~/types/feed'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
@@ -19,9 +20,14 @@ export default defineEventHandler(async (event) => {
 		})
 	}
 
-	const body = await readBody(event)
-
 	try {
+		const body = await readBody(event)
+
+		// 验证输入数据
+		if (!Array.isArray(body)) {
+			throw new TypeError('Invalid data format: expected array')
+		}
+
 		// 构建文件内容
 		let fileContent = `import type { FeedGroup } from '~/types/feed'
 import { getFavicon, getGhAvatar, getGhIcon, getQqAvatar, QqAvatarSize } from './utils/img'
@@ -30,13 +36,22 @@ export default [\n`
 
 		// 处理每个分组
 		for (const group of body) {
+			if (!group || typeof group !== 'object') {
+				continue
+			}
+
 			fileContent += '  {\n'
 
-			// 添加分组名称
-			fileContent += `    name: ${JSON.stringify(group.name)},\n`
+			// 添加分组名称（必需字段）
+			if (typeof group.name === 'string') {
+				fileContent += `    name: ${JSON.stringify(group.name)},\n`
+			}
+			else {
+				throw new TypeError('Invalid group name')
+			}
 
 			// 添加分组描述（如果有）
-			if (group.desc) {
+			if (group.desc && typeof group.desc === 'string') {
 				fileContent += `    desc: ${JSON.stringify(group.desc)},\n`
 			}
 
@@ -45,46 +60,74 @@ export default [\n`
 			fileContent += '    entries: [\n'
 
 			// 处理每个条目
-			for (const entry of group.entries) {
-				fileContent += '      {\n'
+			if (Array.isArray(group.entries)) {
+				for (const entry of group.entries) {
+					if (!entry || typeof entry !== 'object') {
+						continue
+					}
 
-				// 添加必需字段
-				fileContent += `        author: ${JSON.stringify(entry.author)},\n`
-				fileContent += `        link: ${JSON.stringify(entry.link)},\n`
-				fileContent += `        icon: ${JSON.stringify(entry.icon)},\n`
-				fileContent += `        avatar: ${JSON.stringify(entry.avatar)},\n`
-				fileContent += `        date: ${JSON.stringify(entry.date)},\n`
+					fileContent += '      {\n'
 
-				// 添加可选字段
-				if (entry.sitenick) {
-					fileContent += `        sitenick: ${JSON.stringify(entry.sitenick)},\n`
+					// 添加必需字段
+					if (typeof entry.author === 'string') {
+						fileContent += `        author: ${JSON.stringify(entry.author)},\n`
+					}
+					else {
+						throw new TypeError('Missing required field: author')
+					}
+
+					if (typeof entry.link === 'string') {
+						fileContent += `        link: ${JSON.stringify(entry.link)},\n`
+					}
+					else {
+						throw new TypeError('Missing required field: link')
+					}
+
+					fileContent += `        icon: ${JSON.stringify(entry.icon || '')},\n`
+					fileContent += `        avatar: ${JSON.stringify(entry.avatar || '')},\n`
+
+					if (typeof entry.date === 'string') {
+						fileContent += `        date: ${JSON.stringify(entry.date)},\n`
+					}
+					else {
+						throw new TypeError('Missing required field: date')
+					}
+
+					// 添加可选字段
+					if (entry.sitenick && typeof entry.sitenick === 'string') {
+						fileContent += `        sitenick: ${JSON.stringify(entry.sitenick)},\n`
+					}
+
+					if (entry.title && typeof entry.title === 'string') {
+						fileContent += `        title: ${JSON.stringify(entry.title)},\n`
+					}
+
+					if (entry.desc && typeof entry.desc === 'string') {
+						fileContent += `        desc: ${JSON.stringify(entry.desc)},\n`
+					}
+
+					if (entry.feed && typeof entry.feed === 'string') {
+						fileContent += `        feed: ${JSON.stringify(entry.feed)},\n`
+					}
+
+					if (Array.isArray(entry.archs) && entry.archs.length > 0) {
+						// 过滤并验证架构数据
+						const validArchs = entry.archs.filter((arch: any) => typeof arch === 'string')
+						if (validArchs.length > 0) {
+							fileContent += `        archs: ${JSON.stringify(validArchs)},\n`
+						}
+					}
+
+					if (entry.comment && typeof entry.comment === 'string') {
+						fileContent += `        comment: ${JSON.stringify(entry.comment)},\n`
+					}
+
+					if (entry.error && typeof entry.error === 'string') {
+						fileContent += `        error: ${JSON.stringify(entry.error)},\n`
+					}
+
+					fileContent += '      },\n'
 				}
-
-				if (entry.title) {
-					fileContent += `        title: ${JSON.stringify(entry.title)},\n`
-				}
-
-				if (entry.desc) {
-					fileContent += `        desc: ${JSON.stringify(entry.desc)},\n`
-				}
-
-				if (entry.feed) {
-					fileContent += `        feed: ${JSON.stringify(entry.feed)},\n`
-				}
-
-				if (entry.archs && entry.archs.length > 0) {
-					fileContent += `        archs: ${JSON.stringify(entry.archs)},\n`
-				}
-
-				if (entry.comment) {
-					fileContent += `        comment: ${JSON.stringify(entry.comment)},\n`
-				}
-
-				if (entry.error) {
-					fileContent += `        error: ${JSON.stringify(entry.error)},\n`
-				}
-
-				fileContent += '      },\n'
 			}
 
 			// 结束 entries 数组
@@ -95,7 +138,7 @@ export default [\n`
 		}
 
 		// 结束整个数组
-		fileContent += '] satisfies FeedGroup[]\n'
+		fileContent += ']\n'
 
 		// 写入文件
 		const filePath = join(process.cwd(), 'app', 'feeds.ts')
@@ -108,7 +151,7 @@ export default [\n`
 	catch (error: any) {
 		return {
 			success: false,
-			error: error.message,
+			error: error.message || 'Unknown error occurred',
 		}
 	}
 })

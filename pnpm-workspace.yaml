@@ -70,3 +70,5 @@ patchedDependencies:
   vue-tippy: patches/vue-tippy.patch
 
 shamefullyHoist: true
+catalog:
+  vuedraggable: ^4.1.0

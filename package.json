@@ -45,7 +45,8 @@
     "vue": "catalog:framework",
     "vue-router": "catalog:framework",
     "vue-tippy": "catalog:ui",
-    "vue-virtual-scroller": "catalog:ui"
+    "vue-virtual-scroller": "catalog:ui",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:quality",

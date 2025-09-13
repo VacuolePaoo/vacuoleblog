@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FeedEntry, FeedGroup } from '~/types/feed'
 import type { Arch } from '~/utils/icon'
+import VueDraggable from 'vuedraggable'
 import feeds from '~/feeds'
 
 definePageMeta({
@@ -28,20 +29,10 @@ useHead({
 
 const groups = ref<FeedGroup[]>(JSON.parse(JSON.stringify(feeds)))
 // 用于跟踪每个友链条目的展开状态
-const expandedEntries = ref<Record<string, boolean>>({})
+const expandedEntries = ref<Record<string, { expanded: boolean, entry: FeedEntry }>>({})
 
-function addGroup() {
-	groups.value.push({
-		name: '新分组',
-		entries: [],
-	})
-}
-
-function removeGroup(index: number) {
-	if (typeof window !== 'undefined' && window.confirm?.('确定要删除这个分组吗？')) {
-		groups.value.splice(index, 1)
-	}
-}
+// 删除确认状态
+const deleteConfirmations = ref<Record<string, boolean>>({})
 
 function addEntry(groupIndex: number) {
 	const newEntry: FeedEntry = {
@@ -62,12 +53,29 @@ function addEntry(groupIndex: number) {
 }
 
 function removeEntry(groupIndex: number, entryIndex: number) {
-	if (typeof window !== 'undefined' && window.confirm?.('确定要删除这个友链吗？')) {
-		const group = groups.value[groupIndex]
-		if (group?.entries) {
-			group.entries.splice(entryIndex, 1)
-		}
+	const key = `${groupIndex}-${entryIndex}`
+	deleteConfirmations.value[key] = true
+}
+
+function confirmRemoveEntry(groupIndex: number, entryIndex: number) {
+	const group = groups.value[groupIndex]
+	if (group?.entries) {
+		group.entries.splice(entryIndex, 1)
 	}
+
+	// 清理确认状态和展开状态
+	const key = `${groupIndex}-${entryIndex}`
+	delete deleteConfirmations.value[key]
+
+	// 如果删除的是当前展开的条目，也需要清理expandedEntries中的引用
+	if (expandedEntries.value[key]) {
+		delete expandedEntries.value[key]
+	}
+}
+
+function cancelRemoveEntry(groupIndex: number, entryIndex: number) {
+	const key = `${groupIndex}-${entryIndex}`
+	delete deleteConfirmations.value[key]
 }
 
 async function saveFeeds() {
@@ -77,206 +85,206 @@ async function saveFeeds() {
 			body: groups.value,
 		})
 
-		if (typeof window !== 'undefined') {
-			if (response.success) {
-				window.alert?.('保存成功!')
-			}
-			else {
-				window.alert?.(`保存失败: ${response.error}`)
-			}
+		// 简单的成功提示（不使用FeedMessage组件）
+		if (response.success) {
+			// 保存成功，无需额外提示
+		}
+		else {
+			console.error(`保存失败: ${response.error}`)
 		}
 	}
-	catch (error) {
-		if (typeof window !== 'undefined') {
-			window.alert?.(`保存失败: ${error}`)
-		}
-	}
-}
-
-function exportFeeds() {
-	if (typeof window === 'undefined')
-		return
-
-	const dataStr = JSON.stringify(groups.value, null, 2)
-	const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`
-
-	const exportFileDefaultName = 'feeds-export.json'
-
-	const linkElement = document.createElement('a')
-	linkElement.setAttribute('href', dataUri)
-	linkElement.setAttribute('download', exportFileDefaultName)
-	linkElement.style.display = 'none'
-	document.body.appendChild(linkElement)
-	linkElement.click()
-	document.body.removeChild(linkElement)
-}
-
-// 移动分组
-function moveGroupUp(index: number) {
-	if (index > 0) {
-		const temp = groups.value[index]!
-		groups.value[index] = groups.value[index - 1]!
-		groups.value[index - 1] = temp
-	}
-}
-
-function moveGroupDown(index: number) {
-	if (index < groups.value.length - 1) {
-		const temp = groups.value[index]!
-		groups.value[index] = groups.value[index + 1]!
-		groups.value[index + 1] = temp
-	}
-}
-
-// 移动条目
-function moveEntryUp(groupIndex: number, entryIndex: number) {
-	const group = groups.value[groupIndex]
-	const entries = group?.entries
-	if (group && entries && entryIndex > 0) {
-		const temp = entries[entryIndex]!
-		entries[entryIndex] = entries[entryIndex - 1]!
-		entries[entryIndex - 1] = temp
-	}
-}
-
-function moveEntryDown(groupIndex: number, entryIndex: number) {
-	const group = groups.value[groupIndex]
-	const entries = group?.entries
-	if (group && entries && entryIndex < entries.length - 1) {
-		const temp = entries[entryIndex]!
-		entries[entryIndex] = entries[entryIndex + 1]!
-		entries[entryIndex + 1] = temp
+	catch (error: any) {
+		console.error(`保存失败: ${error.message || error}`)
 	}
 }
 
 // 切换友链条目展开状态
 function toggleEntry(groupIndex: number, entryIndex: number) {
 	const key = `${groupIndex}-${entryIndex}`
-	expandedEntries.value[key] = !expandedEntries.value[key]
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+
+	if (entry) {
+		if (expandedEntries.value[key]?.expanded) {
+			// 如果已展开，则关闭
+			expandedEntries.value[key].expanded = false
+		}
+		else {
+			// 如果未展开，则展开
+			expandedEntries.value[key] = {
+				expanded: true,
+				entry,
+			}
+		}
+	}
 }
 
 // 检查友链条目是否展开
 function isEntryExpanded(groupIndex: number, entryIndex: number) {
 	const key = `${groupIndex}-${entryIndex}`
-	return !!expandedEntries.value[key]
+	return !!expandedEntries.value[key]?.expanded
+}
+
+// 更新条目数据
+function updateEntry(groupIndex: number, entryIndex: number, field: string, value: any) {
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+	if (entry) {
+		(entry as any)[field] = value
+
+		// 同步更新expandedEntries中的数据
+		const key = `${groupIndex}-${entryIndex}`
+		if (expandedEntries.value[key]) {
+			expandedEntries.value[key].entry = entry
+		}
+	}
+}
+
+// 更新技术架构字段
+function updateArchs(groupIndex: number, entryIndex: number, value: string) {
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+	if (entry) {
+		const trimmedValue = value.trim()
+		if (trimmedValue) {
+			entry.archs = trimmedValue.split(',').map(a => a.trim() as Arch).filter(a => a)
+		}
+		else {
+			entry.archs = undefined
+		}
+
+		// 同步更新expandedEntries中的数据
+		const key = `${groupIndex}-${entryIndex}`
+		if (expandedEntries.value[key]) {
+			expandedEntries.value[key].entry = entry
+		}
+	}
 }
 </script>
 
 <template>
 <div class="feeds-admin">
-	<div class="header">
-		<h1>友链数据管理</h1>
-		<div class="actions">
-			<button class="btn-primary" @click="addGroup">
-				<Icon name="ph:plus-bold" /> 添加分组
-			</button>
-			<button class="btn-success" @click="saveFeeds">
-				<Icon name="ph:inbox-bold" /> 保存
-			</button>
-			<button class="btn-info" @click="exportFeeds">
-				<Icon name="ph:download-bold" /> 导出
-			</button>
-		</div>
-	</div>
-
 	<div v-for="(group, groupIndex) in groups" :key="groupIndex" class="group">
-		<div class="group-header">
-			<div class="group-title">
-				<input v-model="group.name" placeholder="分组名" class="group-name-input">
-				<input v-model="group.desc" placeholder="分组描述（可选）" class="group-desc-input">
-			</div>
-			<div class="group-actions">
-				<button :disabled="groupIndex === 0" class="btn-icon" @click="moveGroupUp(groupIndex)">
-					<Icon name="ph:arrow-up-bold" />
-				</button>
-				<button :disabled="groupIndex === groups.length - 1" class="btn-icon" @click="moveGroupDown(groupIndex)">
-					<Icon name="ph:arrow-down-bold" />
-				</button>
-				<button class="btn-danger" @click="removeGroup(groupIndex)">
-					<Icon name="ph:trash-bold" /> 删除分组
-				</button>
-			</div>
-		</div>
-
+		<h2 class="group-title">
+			{{ group.name }}
+		</h2>
 		<div class="entries">
+			<!-- 友链卡片 -->
+			<VueDraggable
+				v-model="group.entries"
+				handle=".drag-handle"
+				ghost-class="ghost"
+				drag-class="drag"
+				item-key="link"
+			>
+				<template #item="{ element: entry, index: entryIndex }">
+					<div
+						class="entry-card"
+						@click="toggleEntry(groupIndex, entryIndex)"
+					>
+						<div class="entry-header">
+							<div class="drag-handle">
+								<Icon name="ph:list-bold" />
+							</div>
+							<div v-if="entry.avatar" class="avatar-preview">
+								<img :src="entry.avatar" :alt="entry.author" @error="updateEntry(groupIndex, entryIndex, 'avatar', '')">
+							</div>
+							<div class="entry-title">
+								<span class="author-display">{{ entry.author }}</span>
+								<span class="link-display">{{ entry.link }}</span>
+							</div>
+						</div>
+					</div>
+				</template>
+			</VueDraggable>
+
+			<!-- 展开的编辑器 -->
 			<div
 				v-for="(entry, entryIndex) in group.entries"
-				:key="entryIndex"
-				class="entry"
+				v-show="isEntryExpanded(groupIndex, entryIndex)"
+				:key="`editor-${entryIndex}`"
+				class="entry-editor"
 			>
-				<div class="entry-header" @click="toggleEntry(groupIndex, entryIndex)">
-					<div v-if="entry.avatar" class="avatar-preview">
-						<img :src="entry.avatar" :alt="entry.author" @error="entry.avatar = ''">
-					</div>
-					<div class="entry-title">
-						<input
-							v-model="entry.author"
-							placeholder="作者（必填）"
-							class="author-input"
-							required
-						>
-						<input
-							v-model="entry.link"
-							type="url"
-							placeholder="博客链接（必填）"
-							class="link-input"
-							required
-						>
-					</div>
-					<div class="entry-actions">
-						<button
-							:disabled="entryIndex === 0"
-							class="btn-icon"
-							@click.stop="moveEntryUp(groupIndex, entryIndex)"
-						>
-							<Icon name="ph:arrow-up-bold" />
+				<!-- 删除确认 -->
+				<div v-if="deleteConfirmations[`${groupIndex}-${entryIndex}`]" class="delete-confirmation">
+					<p>确定要删除这个友链吗？</p>
+					<div class="confirmation-actions">
+						<button class="btn-danger" @click="confirmRemoveEntry(groupIndex, entryIndex)">
+							确定
 						</button>
-						<button
-							:disabled="entryIndex === (group.entries?.length ?? 0) - 1"
-							class="btn-icon"
-							@click.stop="moveEntryDown(groupIndex, entryIndex)"
-						>
-							<Icon name="ph:arrow-down-bold" />
+						<button class="btn-secondary" @click="cancelRemoveEntry(groupIndex, entryIndex)">
+							取消
 						</button>
-						<button
-							class="btn-danger btn-icon"
-							@click.stop="removeEntry(groupIndex, entryIndex)"
-						>
-							<Icon name="ph:trash-bold" />
-						</button>
-						<div class="expand-indicator">
-							<Icon :name="isEntryExpanded(groupIndex, entryIndex) ? 'ph:caret-up-bold' : 'ph:caret-down-bold'" />
-						</div>
 					</div>
 				</div>
 
-				<div v-show="isEntryExpanded(groupIndex, entryIndex)" class="entry-details">
+				<div class="entry-details">
+					<div class="detail-row">
+						<label>作者（必填）</label>
+						<input
+							:value="entry.author"
+							placeholder="作者"
+							required
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'author', (e.target as HTMLInputElement).value)"
+						>
+					</div>
+
+					<div class="detail-row">
+						<label>博客链接（必填）</label>
+						<input
+							:value="entry.link"
+							type="url"
+							placeholder="博客链接"
+							required
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'link', (e.target as HTMLInputElement).value)"
+						>
+					</div>
+
 					<div class="detail-row">
 						<label>网站昵称</label>
-						<input v-model="entry.sitenick" placeholder="可选">
+						<input
+							:value="entry.sitenick"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'sitenick', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>网站标题</label>
-						<input v-model="entry.title" placeholder="可选">
+						<input
+							:value="entry.title"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'title', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>描述</label>
-						<input v-model="entry.desc" placeholder="可选">
+						<input
+							:value="entry.desc"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'desc', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>订阅源</label>
-						<input v-model="entry.feed" type="url" placeholder="可选">
+						<input
+							:value="entry.feed"
+							type="url"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'feed', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>图标</label>
 						<div class="input-with-preview">
-							<input v-model="entry.icon" type="url" placeholder="网站图标链接">
+							<input
+								:value="entry.icon"
+								type="url"
+								placeholder="网站图标链接"
+								@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'icon', (e.target as HTMLInputElement).value)"
+							>
 							<div v-if="entry.icon" class="icon-preview">
-								<img :src="entry.icon" :alt="`${entry.author} icon`" @error="entry.icon = ''">
+								<img :src="entry.icon" :alt="`${entry.author} icon`" @error="updateEntry(groupIndex, entryIndex, 'icon', '')">
 							</div>
 						</div>
 					</div>
@@ -284,9 +292,14 @@ function isEntryExpanded(groupIndex: number, entryIndex: number) {
 					<div class="detail-row">
 						<label>头像</label>
 						<div class="input-with-preview">
-							<input v-model="entry.avatar" type="url" placeholder="博主头像链接">
+							<input
+								:value="entry.avatar"
+								type="url"
+								placeholder="博主头像链接"
+								@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'avatar', (e.target as HTMLInputElement).value)"
+							>
 							<div v-if="entry.avatar" class="icon-preview">
-								<img :src="entry.avatar" :alt="`${entry.author} avatar`" @error="entry.avatar = ''">
+								<img :src="entry.avatar" :alt="`${entry.author} avatar`" @error="updateEntry(groupIndex, entryIndex, 'avatar', '')">
 							</div>
 						</div>
 					</div>
@@ -296,32 +309,45 @@ function isEntryExpanded(groupIndex: number, entryIndex: number) {
 						<input
 							:value="entry.archs?.join(', ') ?? ''"
 							placeholder="可选，多个用逗号分隔"
-							@input="(e) => {
-								const target = e.target as HTMLInputElement
-								const value = target.value.trim()
-								if (value) {
-									entry.archs = value.split(',').map(a => a.trim() as Arch).filter(a => a)
-								}
-								else {
-									entry.archs = undefined
-								}
-							}"
+							@input="(e: Event) => updateArchs(groupIndex, entryIndex, (e.target as HTMLInputElement).value)"
 						>
 					</div>
 
 					<div class="detail-row">
 						<label>日期</label>
-						<input v-model="entry.date" type="date" required>
+						<input
+							:value="entry.date"
+							type="date"
+							required
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'date', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>备注</label>
-						<input v-model="entry.comment" placeholder="可选">
+						<input
+							:value="entry.comment"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'comment', (e.target as HTMLInputElement).value)"
+						>
 					</div>
 
 					<div class="detail-row">
 						<label>错误信息</label>
-						<input v-model="entry.error" placeholder="可选">
+						<input
+							:value="entry.error"
+							placeholder="可选"
+							@input="(e: Event) => updateEntry(groupIndex, entryIndex, 'error', (e.target as HTMLInputElement).value)"
+						>
+					</div>
+
+					<div class="detail-actions">
+						<button
+							class="btn-danger btn-icon"
+							@click.stop="removeEntry(groupIndex, entryIndex)"
+						>
+							<Icon name="ph:trash-bold" /> 删除
+						</button>
 					</div>
 				</div>
 			</div>
@@ -332,6 +358,11 @@ function isEntryExpanded(groupIndex: number, entryIndex: number) {
 				<Icon name="ph:plus-bold" /> 添加友链
 			</button>
 		</div>
+	</div>
+	<div class="actions">
+		<button class="btn-primary" @click="saveFeeds">
+			<Icon name="ph:floppy-disk-bold" /> 保存
+		</button>
 	</div>
 </div>
 </template>

@@ -222,7 +222,6 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 	border: 1px solid var(--c-border);
 	border-radius: 0.8rem;
 	box-shadow: 0 4px 20px var(--v-card-shadow);
-	background: no-repeat 100% / 400%;
 	background-color: var(--ld-bg-card);
 	z-index: 0;
 
