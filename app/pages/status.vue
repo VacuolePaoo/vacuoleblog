@@ -59,6 +59,14 @@ function formatLastChecked(checkedAt?: string) {
 	return formatted ? `${formatted}前` : '刚刚'
 }
 
+// 获取最近N次状态检查记录用于可视化展示
+function getRecentHistory(history: ServiceHistory[], count = 20) {
+	if (!history.length)
+		return []
+	// 取最近的记录，如果不足则返回全部
+	return history.slice(-count)
+}
+
 // 状态描述映射
 const statusDescriptions = {
 	operational: '正常运行',
@@ -151,6 +159,17 @@ async function refreshStatus() {
 			<p class="service-url">
 				{{ service.url }}
 			</p>
+
+			<!-- 状态历史可视化 -->
+			<div class="status-history">
+				<div
+					v-for="(record, index) in getRecentHistory(service.history)"
+					:key="index"
+					class="status-block"
+					:class="`status-${record.status.toLowerCase()}`"
+					:title="`检查时间: ${new Date(record.checkedAt).toLocaleString()}\n状态: ${record.status}\n响应时间: ${record.responseTime}ms`"
+				/>
+			</div>
 
 			<div class="service-metrics">
 				<div class="metric">
@@ -267,6 +286,36 @@ async function refreshStatus() {
 		margin-bottom: 1rem;
 		word-break: break-all;
 		color: var(--c-text-3);
+	}
+
+	// 状态历史可视化
+	.status-history {
+		display: flex;
+		gap: 2px;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
+		border-radius: 4px;
+		background-color: var(--c-bg-2);
+	}
+
+	.status-block {
+		flex: 1;
+		height: 20px;
+		min-width: 6px;
+		border-radius: 2px;
+		cursor: help;
+	}
+
+	.status-up {
+		background-color: #4CAF50;
+	}
+
+	.status-down {
+		background-color: #F44336;
+	}
+
+	.status-timeout {
+		background-color: #FF9800;
 	}
 
 	// 服务指标网格
