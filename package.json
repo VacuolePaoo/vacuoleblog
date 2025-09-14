@@ -36,6 +36,7 @@
     "embla-carousel-autoplay": "catalog:ui",
     "embla-carousel-vue": "catalog:ui",
     "embla-carousel-wheel-gestures": "catalog:ui",
+    "howler": "^2.2.4",
     "minisearch": "catalog:util",
     "nuxt": "catalog:framework",
     "parse-domain": "catalog:util",

@@ -221,6 +221,9 @@ importers:
       embla-carousel-wheel-gestures:
         specifier: catalog:ui
         version: 8.1.0(embla-carousel@8.6.0)
+      howler:
+        specifier: ^2.2.4
+        version: 2.2.4
       minisearch:
         specifier: catalog:util
         version: 7.1.2
@@ -3606,6 +3609,9 @@ packages:
 
   hookified@1.12.0:
     resolution: {integrity: sha512-hMr1Y9TCLshScrBbV2QxJ9BROddxZ12MX9KsCtuGGy/3SmmN5H1PllKerrVlSotur9dlE8hmUKAOSa3WDzsZmQ==}
+
+  howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
 
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
@@ -10131,6 +10137,8 @@ snapshots:
 
   hookified@1.12.0: {}
 
+  howler@2.2.4: {}
+
   html-tags@3.3.1: {}
 
   html-void-elements@3.0.0: {}
@@ -13414,7 +13422,7 @@ snapshots:
       picomatch: 4.0.3
       postcss: 8.5.6
       rollup: 4.50.0
-      tinyglobby: 0.2.14
+      tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 24.3.0
       fsevents: 2.3.3
