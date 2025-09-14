@@ -1,2 +1,0 @@
-# 所有非静态资源请求都重定向到 index.html（适用于 SPA 或 Worker 页面）
-/*    /index.html   200

@@ -3,6 +3,7 @@ import type { FeedEntry, FeedGroup } from '~/types/feed'
 import type { Arch } from '~/utils/icon'
 import VueDraggable from 'vuedraggable'
 import feeds from '~/feeds'
+import { archIcons } from '~/utils/icon'
 
 definePageMeta({
 	middleware: [
@@ -144,10 +145,17 @@ function updateArchs(groupIndex: number, entryIndex: number, value: string) {
 	if (entry) {
 		const trimmedValue = value.trim()
 		if (trimmedValue) {
-			entry.archs = trimmedValue.split(',').map(a => a.trim() as Arch).filter(a => a)
+			// 只保留有效的架构项
+			const validArchs = trimmedValue.split(',').map(a => a.trim()).filter(a => a && Object.keys(archIcons).includes(a)) as Arch[]
+			// 获取现有的服务项
+			const services = entry.archs?.filter(a => !Object.keys(archIcons).includes(a)) || []
+			// 合并架构和服务
+			entry.archs = [...validArchs, ...services] as Arch[]
 		}
 		else {
-			entry.archs = undefined
+			// 如果架构为空，只保留服务项
+			const services = entry.archs?.filter(a => !Object.keys(archIcons).includes(a)) || []
+			entry.archs = services.length > 0 ? services as Arch[] : undefined
 		}
 
 		// 同步更新expandedEntries中的数据
@@ -156,6 +164,57 @@ function updateArchs(groupIndex: number, entryIndex: number, value: string) {
 			expandedEntries.value[key].entry = entry
 		}
 	}
+}
+
+// 更新服务字段
+function updateServices(groupIndex: number, entryIndex: number, value: string) {
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+	if (entry) {
+		const trimmedValue = value.trim()
+		if (trimmedValue) {
+			// 获取现有的架构项
+			const archs = entry.archs?.filter(a => Object.keys(archIcons).includes(a)) || []
+			// 处理服务项
+			const services = trimmedValue.split(',').map(s => s.trim()).filter(s => s)
+			// 合并架构和服务
+			entry.archs = [...archs, ...services] as Arch[]
+		}
+		else {
+			// 如果服务为空，只保留架构项
+			const archs = entry.archs?.filter(a => Object.keys(archIcons).includes(a)) || []
+			entry.archs = archs.length > 0 ? archs as Arch[] : undefined
+		}
+
+		// 同步更新expandedEntries中的数据
+		const key = `${groupIndex}-${entryIndex}`
+		if (expandedEntries.value[key]) {
+			expandedEntries.value[key].entry = entry
+		}
+	}
+}
+
+// 获取当前条目的架构列表
+function getArchs(groupIndex: number, entryIndex: number): string {
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+	if (!entry || !entry.archs) {
+		return ''
+	}
+
+	// 过滤出架构项
+	const archs = entry.archs.filter(a => Object.keys(archIcons).includes(a))
+	return archs.join(', ')
+}
+
+// 获取当前条目的服务列表
+function getServices(groupIndex: number, entryIndex: number): string {
+	const entry = groups.value[groupIndex]?.entries[entryIndex]
+	if (!entry || !entry.archs) {
+		return ''
+	}
+
+	// 过滤出非架构项（即服务项）
+	const services = entry.archs.filter(a => !Object.keys(archIcons).includes(a))
+	return services.join(', ')
 }
 </script>
 
@@ -306,11 +365,24 @@ function updateArchs(groupIndex: number, entryIndex: number, value: string) {
 
 					<div class="detail-row">
 						<label>技术架构</label>
-						<input
-							:value="entry.archs?.join(', ') ?? ''"
-							placeholder="可选，多个用逗号分隔"
-							@input="(e: Event) => updateArchs(groupIndex, entryIndex, (e.target as HTMLInputElement).value)"
-						>
+						<div class="dual-input-row">
+							<div class="dual-input-group">
+								<input
+									:value="getArchs(groupIndex, entryIndex)"
+									placeholder="可选，如 Nuxt, Vercel"
+									@input="(e: Event) => updateArchs(groupIndex, entryIndex, (e.target as HTMLInputElement).value)"
+								>
+								<small>架构（来自预设列表）</small>
+							</div>
+							<div class="dual-input-group">
+								<input
+									:value="getServices(groupIndex, entryIndex)"
+									placeholder="可选，如 Cloudflare, Netlify"
+									@input="(e: Event) => updateServices(groupIndex, entryIndex, (e.target as HTMLInputElement).value)"
+								>
+								<small>服务（自定义）</small>
+							</div>
+						</div>
 					</div>
 
 					<div class="detail-row">
@@ -366,7 +438,3 @@ function updateArchs(groupIndex: number, entryIndex: number, value: string) {
 	</div>
 </div>
 </template>
-
-<style lang="scss" scoped>
-// 样式已移至 ~/assets/css/feeds-admin.scss
-</style>

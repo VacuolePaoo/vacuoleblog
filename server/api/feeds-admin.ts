@@ -112,7 +112,7 @@ export default [\n`
 
 					if (Array.isArray(entry.archs) && entry.archs.length > 0) {
 						// 过滤并验证架构数据
-						const validArchs = entry.archs.filter((arch: any) => typeof arch === 'string')
+						const validArchs = entry.archs.filter((arch: any) => typeof arch === 'string' && arch.length > 0)
 						if (validArchs.length > 0) {
 							fileContent += `        archs: ${JSON.stringify(validArchs)},\n`
 						}

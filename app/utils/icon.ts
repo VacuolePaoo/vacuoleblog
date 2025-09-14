@@ -1,6 +1,6 @@
 /** 友链架构图标映射 */
 // @keep-sorted
-const archIcons = {
+export const archIcons = {
 	'服务器': 'ph:hard-drives-fill',
 	'国内 CDN': 'ph:cloud-check-fill',
 	'虚拟主机': 'ph:file-cloud-bold',

@@ -93,7 +93,7 @@ export default defineAppConfig({
 
 	/** 左侧栏顶部 Logo */
 	header: {
-		logo: 'https://www.helloimg.com/i/2025/08/31/68b33ae5c6366.jpg',
+		logo: 'http://image.qingshuiot.cn/avatar.jpg',
 		/** 展示标题文本，否则展示纯 Logo */
 		showTitle: true,
 		subtitle: blogConfig.subtitle,

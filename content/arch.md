@@ -8,14 +8,15 @@ hideInfo: true
 
 **服务状态**：自部署接口，云函数定时获取服务状态，并返回数据。
 
-
 ## 开发
+
 ::card-list
+
 - 内容与服务
   - **内容管理**：Nuxt Content v3
   - **部署平台**：Netlify
   - **评论系统**：Twikoo
-  - **图床**：Bitiful、SMMS、Helloimg
+  - **图床**：Bitiful、SMMS
   - **评论数据库**：MongoDB
   - **包管理器**：pnpm
 - 工具库
@@ -33,5 +34,5 @@ hideInfo: true
   - **状态管理**：Pinia
   - **Vue 实用功能库**：VueUse
   - **代码质量**：ESLint + Stylelint
-  - **代码压缩**：Terser
-::
+  - | **代码压缩**：Terser |
+    | :------------------------: |
