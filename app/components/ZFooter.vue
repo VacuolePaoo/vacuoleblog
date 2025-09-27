@@ -20,10 +20,13 @@ function initializeRandomFeeds() {
 	)
 
 	// Fisher-Yates 洗牌算法随机打乱数组
-	const shuffled = [...allFeeds].sort(() => 0.5 - Math.random())
+	for (let i = allFeeds.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[allFeeds[i], allFeeds[j]] = [allFeeds[j], allFeeds[i]]
+	}
 
 	// 返回前4个
-	randomFeeds.value = shuffled.slice(0, 4)
+	randomFeeds.value = allFeeds.slice(0, 4)
 }
 
 // 获取一言
