@@ -91,8 +91,6 @@ const yearlyWordCount = computed(() => {
 
 .archive-title {
 	display: flex;
-
-	// align-items: center;
 	justify-content: space-between;
 	gap: 1em;
 	position: sticky;
@@ -120,7 +118,7 @@ const yearlyWordCount = computed(() => {
 
 	> .archive-age {
 		position: absolute;
-		right: 0;
+		inset-inline-end: 0;
 		transition: opacity 0.2s;
 
 		> .age-label {

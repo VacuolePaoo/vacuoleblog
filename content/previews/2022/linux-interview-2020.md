@@ -259,10 +259,10 @@ int main(int argc, char *argv[]) {
 >         printf("Waiting for y%du!\n", a);
 >     }
 >     if(add(&b, 1) && a++) {
->     printf("XiyouLinuxGroup%d\n", b);
->     printf("Waiting for y%du!\n", a);
-> }
->   return 0;
+>         printf("XiyouLinuxGroup%d\n", b);
+>         printf("Waiting for y%du!\n", a);
+>     }
+>     return 0;
 > }
 > ```
 
@@ -284,10 +284,10 @@ int main(int argc, char *argv[]) {
     // add(&b, 1) returns true, while a++ executed with ruturning 0,
     // so this conditional statement will not be executed
     if(add(&b, 1) && a++) {
-    printf("XiyouLinuxGroup%d\n", b);
-    printf("Waiting for y%du!\n", a);
-}
-  return 0;
+        printf("XiyouLinuxGroup%d\n", b);
+        printf("Waiting for y%du!\n", a);
+    }
+    return 0;
 }
 ```
 
@@ -346,7 +346,7 @@ void func() {
 ```c
 #include <stdio.h>
 int main() {
-    // It outputs a anoymous int array as a char array
+    // It outputs a anonymous int array as a char array
     // using little-endian storing methods
     puts((char *)(int const[]){
         // o y i X     n i L u     r G x u

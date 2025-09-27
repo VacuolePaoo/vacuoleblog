@@ -53,51 +53,10 @@ onMounted(() => {
 
 	.tk-content {
 		margin-top: 0.1rem;
-
-		img {
-			border-radius: 0.5em;
-		}
 	}
 
 	.tk-comments-title, .tk-nick > strong {
 		font-family: var(--font-creative);
-	}
-
-	pre {
-		border-radius: 0.5rem;
-		font-size: 0.8125rem;
-	}
-
-	p {
-		margin: 0.2em 0;
-	}
-
-	menu, ol, ul {
-		margin: 0.5em 0;
-		padding: 0 0 0 1.5em;
-		list-style: revert;
-
-		> li {
-			margin: 0.2em 0;
-
-			&::marker {
-				font-size: 0.8em;
-				color: var(--c-primary);
-			}
-		}
-	}
-
-	blockquote {
-		margin: 0.5em 0;
-		padding: 0.2em 0.5em;
-		border-left: 4px solid var(--c-border);
-		border-radius: 4px;
-		background-color: var(--c-bg-2);
-		font-size: 0.9rem;
-
-		> .z-codeblock {
-			margin: 0 -0.8rem;
-		}
 	}
 
 	.tk-owo-emotion {
@@ -118,6 +77,45 @@ onMounted(() => {
 	.tk-expand {
 		border-radius: 0.5rem;
 		transition: background-color 0.1s;
+	}
+}
+
+:deep(:where(.tk-preview-container,.tk-content)) {
+	pre {
+		border-radius: 0.5rem;
+		font-size: 0.8125rem;
+	}
+
+	p {
+		margin: 0.2em 0;
+	}
+
+	img {
+		border-radius: 0.5em;
+	}
+
+	menu, ol, ul {
+		margin: 0.5em 0;
+		padding-inline-start: 1.5em;
+		font-size: 0.9rem;
+		list-style: revert;
+
+		> li {
+			margin: 0.2em 0;
+
+			&::marker {
+				color: var(--c-primary);
+			}
+		}
+	}
+
+	blockquote {
+		margin: 0.5em 0;
+		padding: 0.2em 0.5em;
+		border-inline-start: 4px solid var(--c-border);
+		border-radius: 4px;
+		background-color: var(--c-bg-2);
+		font-size: 0.9rem;
 	}
 }
 </style>

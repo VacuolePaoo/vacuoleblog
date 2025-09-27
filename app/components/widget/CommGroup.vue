@@ -16,32 +16,25 @@ function handleClick() {
 <style lang="scss" scoped>
 @font-face {
 	font-family: ShuHei;
-	src: url(/fonts/AlimamaShuhei.woff2);
+	src: url("/fonts/AlimamaShuhei.woff2");
 }
 
 .title {
-	margin: 0.8rem;
 	position: relative;
-	font-size: 1.8em;
+	overflow: hidden;
+	margin: 0.8rem;
+	mask-image:
+		linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 15%,
+			black 85%,
+			transparent 100%
+		);
 	font-family: ShuHei;
+	font-size: 1.8em;
 	letter-spacing: 0.05em;
 
-	overflow: hidden;
-	mask-image: linear-gradient(
-		to bottom,
-		transparent 0%,
-		black 15%,
-		black 85%,
-		transparent 100%
-	);
-	-webkit-mask-image: linear-gradient(
-		to bottom,
-		transparent 0%,
-		black 15%,
-		black 85%,
-		transparent 100%
-	);
-	
 	span {
 		display: block;
 		background-clip: text;
@@ -67,9 +60,11 @@ function handleClick() {
 		.original {
 			transform: translateY(-100%);
 		}
+
 		.hover {
 			transform: translateY(0);
 		}
+
 		span {
 			background-position: 0 0;
 		}
@@ -77,8 +72,8 @@ function handleClick() {
 }
 
 .tip {
-	margin: 0.2em 0;
 	font-size: 0.9em;
+	line-height: 2;
 }
 
 :deep(.bg-img).bg-img.bg-img {

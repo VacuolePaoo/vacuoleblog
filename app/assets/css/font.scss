@@ -3,10 +3,10 @@
 	--font-serif: "Noto Serif SC-Local", "Noto Serif SC", "华文中宋", "Times New Roman", serif;
 	--font-creative: "Inter-Local", "InterVariable", "Noto Sans SC-Local", "Noto Sans SC", "MiSans", system-ui, sans-serif;
 	--font-stroke-free: "Inter-Local", "Inter", "Microsoft YaHei", "MiSans", system-ui, sans-serif;
-	--font-monospace: "JetBrains Mono", "SFMono-Regular", "Cascadia Code", "Fira Code", "Menlo", "Monaco", "Consolas", "Noto Sans Mono", "monospace", var(--font-basic), monospace;
+	--font-monospace: "JetBrains Mono", "Cascadia Code", "Monaco", "Consolas", "monospace", var(--font-basic), monospace;
 
-	@media (max-resolution: 1.4dppx) {
-		--font-basic: system-ui, sans-serif;
+	@media (max-resolution: 1.2dppx) {
+		--font-basic: "Inter-Local", "InterVariable", system-ui, sans-serif;
 	}
 }
 
@@ -14,7 +14,6 @@ $font-weights: (
 	100: "Thin",
 	200: "ExtraLight",
 	300: "Light",
-	350: "DemiLight",
 	400: "Regular",
 	500: "Medium",
 	600: "SemiBold",
@@ -26,34 +25,15 @@ $font-weights: (
 @each $weight, $name in $font-weights {
 	@font-face {
 		font-family: Inter-Local;
-		font-style: normal;
-		font-weight: #{$weight};
-		font-display: swap;
+		font-weight: $weight;
 		src: local("Inter #{$name}");
 	}
 
 	@font-face {
 		font-family: Inter-Local;
 		font-style: italic;
-		font-weight: #{$weight};
-		font-display: swap;
-		src: local("Inter #{$name} Italic");
-	}
-
-	@font-face {
-		font-family: "Noto Sans SC-Local";
-		font-style: normal;
-		font-weight: #{$weight};
-		font-display: swap;
-		src: local("Noto Sans SC-#{$name}");
-	}
-
-	@font-face {
-		font-family: "Noto Serif SC-Local";
-		font-style: normal;
-		font-weight: #{$weight};
-		font-display: swap;
-		src: local("Noto Serif SC-#{$name}");
+		font-weight: $weight;
+		src: local("Inter #{if($weight == 400, 'Italic', '#{$name} Italic')}");
 	}
 }
 
@@ -74,10 +54,11 @@ $font-weights: (
 
 @include inter-styleset(Inter-Local);
 
+// 仅在 Chrome 111+ 启用本地可变字体
 @supports (font-variant-alternates: normal) {
 	@font-face {
 		font-family: "Noto Sans SC-Local";
-		font-weight: 100 900;
+		font-weight: 100 900; // 不指定则为 400
 		src: local("Noto Sans SC");
 	}
 
@@ -87,4 +68,3 @@ $font-weights: (
 		src: local("Noto Serif SC");
 	}
 }
-

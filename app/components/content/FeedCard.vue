@@ -100,6 +100,7 @@ onMounted(() => {
 	margin: 1rem auto;
 	padding: 0.5rem;
 	line-height: 1.4;
+	transition: transform 0.2s;
 	animation: float-in 0.2s var(--delay) backwards;
 
 	&:hover {
@@ -127,7 +128,7 @@ onMounted(() => {
 
 		.no-feed {
 			position: absolute;
-			right: -0.5em;
+			inset-inline-end: -0.5em;
 			bottom: 0;
 		}
 	}
@@ -194,7 +195,7 @@ onMounted(() => {
 	.date {
 		position: absolute;
 		opacity: 0.1;
-		right: -0.1em;
+		inset-inline-end: -0.1em;
 		bottom: -0.3em;
 		font-size: 3em;
 		font-weight: bold;
