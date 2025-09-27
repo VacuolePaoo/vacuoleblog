@@ -25,6 +25,11 @@ function removeBilibiliLink(text: string) {
 	return text.replace(/https?:\/\/(www\.)?bilibili\.com\/video\/(BV\w+)/g, '').trim()
 }
 
+// 检查是否为 Telegram 表情图片
+function isTelegramEmoji(url: string) {
+	return url.includes('telegram.org/img/emoji/')
+}
+
 const appConfig = useAppConfig()
 useSeoMeta({
 	title: '即刻短文',
@@ -137,7 +142,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 					<!-- 图片内容 -->
 					<div v-if="moment.image && moment.image.length > 0 && !extractBilibiliId(moment.text)" class="moment-images">
 						<div
-							v-for="(img, imgIndex) in moment.image"
+							v-for="(img, imgIndex) in moment.image.filter(img => !isTelegramEmoji(img))"
 							:key="imgIndex"
 							class="moment-image"
 						>
