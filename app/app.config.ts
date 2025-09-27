@@ -94,7 +94,7 @@ export default defineAppConfig({
 
 	/** 左侧栏顶部 Logo */
 	header: {
-		logo: 'https://vblog-image.s3.bitiful.net/avatar.jpg',
+		logo: 'https://s2.loli.net/2025/08/05/vW2pnGsJOAd6qEX.jpg',
 		/** 展示标题文本，否则展示纯 Logo */
 		showTitle: true,
 		subtitle: blogConfig.subtitle,

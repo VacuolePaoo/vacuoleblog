@@ -9,7 +9,7 @@ const basicConfig = {
 	description: '液泡-VacuolePao的个人博客，分享技术与生活。“折腾不止，摸鱼生活——摸门🙏🏻”。液泡是一名开源爱好者，结识了许多志同道合的朋友。这个博客记录了他在生活和技术学习中的点滴经历，充满启发与思考。网站界面简洁美观，内容丰富实用，人气互动活跃，涵盖了编程、生活、学习等多个领域，为读者提供了卓越的阅读体验。',
 	author: {
 		name: '液泡',
-		avatar: 'https://vblog-image.s3.bitiful.net/avatar.jpg',
+		avatar: 'https://s2.loli.net/2025/08/05/vW2pnGsJOAd6qEX.jpg',
 		email: 'me@vacu.top',
 		homepage: 'https://www.vacu.top',
 	},
