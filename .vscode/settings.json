@@ -2,6 +2,12 @@
   "[css]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
+  "[markdown]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "editor.suggest.showSnippets": true,
+    "editor.snippetSuggestions": "top",
+    "editor.suggest.showWords": false
+  },
   "[mdc]": {
     "files.autoGuessEncoding": false
   },
