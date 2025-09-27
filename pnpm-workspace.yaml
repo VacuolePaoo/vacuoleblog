@@ -71,4 +71,5 @@ patchedDependencies:
 
 shamefullyHoist: true
 catalog:
+  howler: ^2.2.4
   vuedraggable: ^4.1.0
