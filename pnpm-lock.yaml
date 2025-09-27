@@ -33,6 +33,10 @@ catalogs:
     shiki:
       specifier: ^3.13.0
       version: 3.13.0
+  default:
+    vuedraggable:
+      specifier: ^4.1.0
+      version: 4.1.0
   framework:
     '@dxup/nuxt':
       specifier: ^0.0.1
@@ -254,6 +258,9 @@ importers:
       vue-virtual-scroller:
         specifier: catalog:ui
         version: 2.0.0-beta.8(vue@3.5.22(typescript@5.9.2))
+      vuedraggable:
+        specifier: 'catalog:'
+        version: 4.1.0(vue@3.5.22(typescript@5.9.2))
     devDependencies:
       '@antfu/eslint-config':
         specifier: catalog:quality
@@ -5635,6 +5642,9 @@ packages:
     resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
     engines: {node: '>=10.0.0'}
 
+  sortablejs@1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -6356,6 +6366,11 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  vuedraggable@4.1.0:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
@@ -12824,6 +12839,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  sortablejs@1.14.0: {}
+
   source-map-js@1.2.1: {}
 
   source-map-support@0.5.21:
@@ -13583,6 +13600,11 @@ snapshots:
       '@vue/shared': 3.5.22(patch_hash=57b0a2fe18a728df30b65bd78dd65d488e6a3ae6742a92de1856300d93307a0c)
     optionalDependencies:
       typescript: 5.9.2
+
+  vuedraggable@4.1.0(vue@3.5.22(typescript@5.9.2)):
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.5.22(typescript@5.9.2)
 
   web-namespaces@2.0.1: {}
 

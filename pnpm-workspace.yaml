@@ -1,3 +1,7 @@
+catalog:
+  howler: ^2.2.4
+  vuedraggable: ^4.1.0
+
 catalogs:
   content:
     '@nuxt/content': ^3.7.1
@@ -70,6 +74,3 @@ patchedDependencies:
   '@vue/shared': patches/@vue__shared.patch
 
 shamefullyHoist: true
-catalog:
-  howler: ^2.2.4
-  vuedraggable: ^4.1.0
