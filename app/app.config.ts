@@ -65,7 +65,7 @@ export default defineAppConfig({
 				title: '页面',
 				items: [
 					{ icon: 'ph:link-bold', text: '友链', url: '/link' },
-					{ icon: 'ph:note-bold', text: '说说', url: '/moment' },
+					{ icon: 'ph:quotes-bold', text: '说说', url: '/moment' },
 					{ icon: 'ph:hard-drives-bold', text: '服务状态', url: '/status' },
 				],
 			},
@@ -109,7 +109,7 @@ export default defineAppConfig({
 				{ icon: 'ph:files-bold', text: '文章', url: '/' },
 				{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
-				{ icon: 'ph:note-bold', text: '即刻短文', url: '/moment' },
+				{ icon: 'ph:quotes-bold', text: '即刻短文', url: '/moment' },
 			],
 		},
 	] satisfies Nav,
