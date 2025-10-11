@@ -12,21 +12,18 @@ const showHitokoto = ref(false)
 function initializeRandomFeeds() {
 	// 收集所有友链条目
 	const allFeeds = feeds.flatMap((group: any) =>
-		group.entries.map((entry: any) => ({
+		group.entries.map((entry: any, index: number) => ({
+			id: `${entry.link}-${index}`,
 			text: entry.author,
 			url: entry.link,
-			icon: 'ph:link-bold', // 使用统一的图标
+			icon: 'ph:link-bold',
 		})),
 	)
 
-	// Fisher-Yates 洗牌算法随机打乱数组
-	for (let i = allFeeds.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[allFeeds[i], allFeeds[j]] = [allFeeds[j], allFeeds[i]]
-	}
-
-	// 返回前4个
-	randomFeeds.value = allFeeds.slice(0, 4)
+	// 随机排序并取前4个
+	randomFeeds.value = allFeeds
+		.sort(() => Math.random() - 0.5)
+		.slice(0, 4)
 }
 
 // 获取一言
@@ -79,7 +76,7 @@ function refreshFeeds() {
 				</button>
 			</h3>
 			<menu>
-				<li v-for="(feed, index) in randomFeeds" :key="index">
+				<li v-for="feed in randomFeeds" :key="feed.id">
 					<ZRawLink :to="feed.url" external>
 						<Icon :name="feed.icon" />
 						<span class="nav-text">{{ feed.text }}</span>
