@@ -4,6 +4,10 @@ export function getLocaleDatetime(date: string | Date) {
 	return format(date, 'yyyy年M月d日 E HH:mm:ss')
 }
 
+export function getPostDate(date: string | Date) {
+	return format(date, 'yyyy年M月d日')
+}
+
 export function isTimeDiffSignificant(
 	date1?: string | Date,
 	date2?: string | Date,
