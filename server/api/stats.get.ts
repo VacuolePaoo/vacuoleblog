@@ -10,76 +10,88 @@ interface CategoryEntry {
 }
 
 export default defineEventHandler(async (event) => {
-	const stats = {
-		total: { posts: 0, words: 0 },
-		annual: <Record<number, StatsEntry>>{},
-		categories: <CategoryEntry[]>[],
-		tags: <string[]>[],
-	}
-
-	const existedPath = new Map()
-
-	const posts = await queryCollection(event, 'content').all()
-
-	const findOrCreateCategory = (
-		name: string,
-		tree: CategoryEntry[],
-	): CategoryEntry => {
-		let category = tree.find(entry => entry.name === name)
-		if (!category) {
-			category = { name, posts: 0 }
-			tree.push(category)
-		}
-		return category
-	}
-
-	for (const post of posts) {
-		// 排除 previews 文件夹的内容统计
-		if (post.path && post.path.startsWith('/previews/')) {
-			continue
+	try {
+		const stats = {
+			total: { posts: 0, words: 0 },
+			annual: <Record<number, StatsEntry>>{},
+			categories: <CategoryEntry[]>[],
+			tags: <string[]>[],
 		}
 
-		stats.total.posts++
-		stats.total.words += post.readingTime.words
+		const existedPath = new Map()
 
-		if (!post.date)
-			continue
+		const posts = await queryCollection(event, 'content').all()
 
-		// 年文章/年字数计数
-		const year = new Date(post.date).getFullYear()
-		if (!stats.annual[year]) {
-			stats.annual[year] = { posts: 0, words: 0 }
+		const findOrCreateCategory = (
+			name: string,
+			tree: CategoryEntry[],
+		): CategoryEntry => {
+			let category = tree.find(entry => entry.name === name)
+			if (!category) {
+				category = { name, posts: 0 }
+				tree.push(category)
+			}
+			return category
 		}
 
-		stats.annual[year].posts++
-		stats.annual[year].words += post.readingTime?.words || 0
+		for (const post of posts) {
+			// 排除 previews 文件夹的内容统计
+			if (post.path && post.path.startsWith('/previews/')) {
+				continue
+			}
 
-		// 分类文章计数
-		const categories = post.categories || []
-		let currentLevel = stats.categories
+			stats.total.posts++
+			stats.total.words += post.readingTime?.words || 0
 
-		for (const [index, categoryName] of categories.entries()) {
-			if (typeof categoryName !== 'string')
+			if (!post.date)
 				continue
 
-			const category = findOrCreateCategory(categoryName, currentLevel)
-			category.posts++
-
-			if (index < categories.length - 1) {
-				if (!category.children)
-					category.children = []
-				currentLevel = category.children
+			// 年文章/年字数计数
+			const year = new Date(post.date).getFullYear()
+			if (!stats.annual[year]) {
+				stats.annual[year] = { posts: 0, words: 0 }
 			}
+
+			stats.annual[year].posts++
+			stats.annual[year].words += post.readingTime?.words || 0
+
+			// 分类文章计数
+			const categories = post.categories || []
+			let currentLevel = stats.categories
+
+			for (const [index, categoryName] of categories.entries()) {
+				if (typeof categoryName !== 'string')
+					continue
+
+				const category = findOrCreateCategory(categoryName, currentLevel)
+				category.posts++
+
+				if (index < categories.length - 1) {
+					if (!category.children)
+						category.children = []
+					currentLevel = category.children
+				}
+			}
+
+			// 标签统计
+			const tags = post.tags || []
+			tags.filter((tag: any): tag is string => typeof tag === 'string')
+				.forEach((tag: string) => {
+					if (!stats.tags.includes(tag))
+						stats.tags.push(tag)
+				})
 		}
 
-		// 标签统计
-		const tags = post.tags || []
-		tags.filter((tag: any): tag is string => typeof tag === 'string')
-			.forEach((tag: string) => {
-				if (!stats.tags.includes(tag))
-					stats.tags.push(tag)
-			})
+		return stats
 	}
-
-	return stats
+	catch (error) {
+		console.error('Stats API error:', error)
+		// 返回默认值而不是抛出错误
+		return {
+			total: { posts: 0, words: 0 },
+			annual: {},
+			categories: [],
+			tags: [],
+		}
+	}
 })
