@@ -58,6 +58,16 @@ export default [
 				archs: ['Nuxt', '虚拟主机'],
 				comment: '自主设计，交互有趣的独立博客。',
 			},
+			{
+				author: '张洪Heo',
+				link: 'https://blog.zhheo.com/',
+				icon: 'https://img.zhheo.com/i/67d8fa75943e4.webp',
+				avatar: 'https://img.zhheo.com/i/67d8fa75943e4.webp',
+				date: '2025-11-01',
+				title: '张洪Heo',
+				desc: '分享设计与科技生活',
+				archs: ['Hexo', '虚拟主机'],
+			},
 		],
 	},
 ]
