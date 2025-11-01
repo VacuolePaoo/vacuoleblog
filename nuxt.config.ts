@@ -1,6 +1,6 @@
 import type { NitroConfig } from 'nitropack'
 import process from 'node:process'
-import ci, { name } from 'ci-info'
+import ci from 'ci-info'
 import blogConfig from './blog.config'
 import packageJson from './package.json'
 import redirectList from './redirects.json'
@@ -57,6 +57,10 @@ export default defineNuxtConfig({
 		'@/assets/css/feeds-admin.scss', // 添加 feeds-admin.scss
 	],
 
+	experimental: {
+		typescriptPlugin: true,
+	},
+
 	features: {
 		inlineStyles: false,
 	},
@@ -85,6 +89,20 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks(id) {
+						if (id === 'parse-domain') {
+							return 'parse-domain'
+						}
+						if (id.includes('/@nuxtjs/mdc/dist/runtime/components/prose/')) {
+							return 'content-prose'
+						}
+					},
+				},
+			},
+		},
 		css: {
 			preprocessorOptions: {
 				scss: {
@@ -105,7 +123,6 @@ export default defineNuxtConfig({
 
 	// @keep-sorted
 	modules: [
-		'@dxup/nuxt',
 		'@nuxt/content',
 		'@nuxt/icon',
 		'@nuxt/image',
@@ -113,6 +130,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/seo',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
+		'nuxt-llms',
 		'unplugin-yaml/nuxt',
 	],
 
@@ -129,8 +147,10 @@ export default defineNuxtConfig({
 				// @keep-sorted
 				remarkPlugins: {
 					'remark-math': {},
+					'remark-music': {},
 					'remark-reading-time': {},
 				},
+				// @keep-sorted
 				rehypePlugins: {
 					'rehype-katex': {},
 				},
@@ -169,6 +189,11 @@ ${packageJson.homepage}
 		customCollections: [
 			{ prefix: 'zi', dir: './app/assets/icons' },
 		],
+		clientBundle: {
+			scan: {
+				globInclude: ['**\/*.{vue,jsx,tsx,ts,md,mdc,mdx}'],
+			},
+		},
 	},
 
 	image: {
@@ -184,6 +209,12 @@ ${packageJson.homepage}
 			'no-non-ascii-chars',
 			'no-uppercase-chars',
 		],
+	},
+
+	llms: {
+		domain: blogConfig.url,
+		title: blogConfig.title,
+		description: blogConfig.description,
 	},
 
 	robots: {
