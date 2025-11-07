@@ -64,9 +64,8 @@ export default defineAppConfig({
 			{
 				title: '页面',
 				items: [
-					{ icon: 'ph:link-bold', text: '友链', url: '/link' },
-					{ icon: 'ph:quotes-bold', text: '说说', url: '/moment' },
-					{ icon: 'ph:hard-drives-bold', text: '服务状态', url: '/status' },
+					{ icon: 'ph:link-bold', text: '友情链接', url: '/link' },
+					{ icon: 'ph:quotes-bold', text: '即刻短文', url: '/moment' },
 				],
 			},
 			{
