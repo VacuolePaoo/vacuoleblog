@@ -5,7 +5,7 @@ const props = defineProps<{
 	show?: boolean
 }>()
 
-// 创建中文分词器（如果浏览器支持）
+// 使用Intl.Segmenter进行中文分词
 const segmenter = Intl.Segmenter ? new Intl.Segmenter('zh', { granularity: 'word' }) : null
 
 // 自定义分词函数，支持中英文混合文本
@@ -14,11 +14,11 @@ function tokenize(text: string): string[] {
 	if (segmenter) {
 		const segments = segmenter.segment(text)
 		return Array.from(segments)
-			.filter(seg => seg.isWordLike) // 只保留词语片段
+			.filter(seg => seg.isWordLike)
 			.map(seg => seg.segment)
 	}
 
-	// 否则使用默认的分词方式（按空格和标点符号分割）
+	// 否则按minisearch分词，空格和标点啥的
 	return text.toLowerCase().split(/[\s\p{P}\p{S}]+/u).filter(Boolean)
 }
 
@@ -37,7 +37,7 @@ const miniSearch = new MiniSearch({
 	storeFields: ['title', 'titles', 'content', 'level'],
 	// 使用自定义的分词函数
 	tokenize,
-	// 搜索时也使用相同的分词逻辑
+	// 搜索使用两个逻辑
 	searchOptions: {
 		prefix: true,
 		fuzzy: 0.2,
