@@ -48,9 +48,9 @@ initializeRandomFeeds()
 fetchHitokoto()
 
 // 刷新随机友链
-function refreshFeeds() {
-	initializeRandomFeeds()
-}
+// function refreshFeeds() {
+// 	initializeRandomFeeds()
+// }
 </script>
 
 <template>
