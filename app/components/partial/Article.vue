@@ -117,7 +117,7 @@ span:not([class]):empty {
 	width: min(320px, 50%);
 	height: 100%;
 	margin: 0;
-	mask-image: linear-gradient(to var(--end), transparent, #FFF 50%);
+	// mask-image: linear-gradient(to var(--end), transparent, #FFF 50%);
 	transition: all 0.2s;
 	object-fit: cover;
 
@@ -127,7 +127,7 @@ span:not([class]):empty {
 
 	& + article {
 		position: relative;
-		width: 60%;
+		width: 55%;
 		text-shadow: 0 0 0.5rem var(--ld-bg-card), 0 0 1rem var(--ld-bg-card);
 	}
 
