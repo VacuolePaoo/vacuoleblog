@@ -3,6 +3,7 @@ packages:
 
 catalog:
   howler: ^2.2.4
+  stylelint-config-standard: ^39.0.1
   vuedraggable: ^4.1.0
 
 catalogs:

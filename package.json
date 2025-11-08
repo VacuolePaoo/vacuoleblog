@@ -49,6 +49,7 @@
     "radash": "catalog:util",
     "shiki": "catalog:content",
     "site-config-stack": "catalog:util",
+    "stylelint-config-standard": "catalog:",
     "vue": "catalog:framework",
     "vue-router": "catalog:framework",
     "vue-tippy": "catalog:ui",

@@ -8,7 +8,6 @@ interface Moment {
 	time: number
 	views: string | null
 }
-
 // 格式化文本，将换行符转换为 <br> 标签
 function formatText(text: string) {
 	return text.replace(/\n/g, '<br>')
