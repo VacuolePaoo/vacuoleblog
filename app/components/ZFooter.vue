@@ -20,10 +20,13 @@ function initializeRandomFeeds() {
 		})),
 	)
 
-	// 随机排序并取前4个
-	randomFeeds.value = allFeeds
-		.sort(() => Math.random() - 0.5)
-		.slice(0, 4)
+	// 使用 Fisher-Yates 洗牌算法进行随机排序并取前4个
+	for (let i = allFeeds.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[allFeeds[i], allFeeds[j]] = [allFeeds[j], allFeeds[i]]
+	}
+
+	randomFeeds.value = allFeeds.slice(0, 4)
 }
 
 // 获取一言
