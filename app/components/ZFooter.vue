@@ -71,7 +71,7 @@ function refreshFeeds() {
 		</div>
 
 		<!-- 随机友链展示 -->
-		<div class="footer-nav-group">
+		<!-- <div class="footer-nav-group">
 			<h3>
 				友链
 				<button aria-label="刷新" class="refresh-button" title="刷新友链" @click="refreshFeeds">
@@ -91,7 +91,7 @@ function refreshFeeds() {
 					</ZRawLink>
 				</li>
 			</menu>
-		</div>
+		</div> -->
 	</nav>
 	<p v-html="appConfig.footer.copyright" />
 	<p class="hitokoto" :class="{ 'hitokoto-fade-in': showHitokoto }">

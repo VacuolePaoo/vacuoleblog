@@ -75,7 +75,6 @@ function render() {
 			transition: all 0.2s;
 
 			&:hover {
-				transform: translateY(-2px);
 				box-shadow: 0 0.5rem 1rem var(--ld-shadow);
 			}
 		}
