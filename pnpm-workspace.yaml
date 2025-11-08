@@ -65,6 +65,10 @@ catalogs:
     rimraf: ^6.0.1
     site-config-stack: ^3.2.11
     strip-ansi: ^7.1.2
+  conflicts_stylelint-config-standard_:
+    stylelint-config-standard: ''
+  conflicts_stylelint-config-standard_catalog:
+    stylelint-config-standard: catalog
 
 engineStrict: true
 
