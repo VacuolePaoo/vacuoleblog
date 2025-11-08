@@ -12,8 +12,8 @@ const showHitokoto = ref(false)
 function initializeRandomFeeds() {
 	// 收集所有友链条目
 	const allFeeds = feeds.flatMap((group: any) =>
-		group.entries.map((entry: any, index: number) => ({
-			id: `${entry.link}-${index}`,
+		group.entries.map((entry: any) => ({
+			id: entry.link,
 			text: entry.author,
 			url: entry.link,
 			icon: 'ph:link-bold',
