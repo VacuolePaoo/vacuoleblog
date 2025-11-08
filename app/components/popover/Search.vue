@@ -31,7 +31,6 @@ const { data, status } = useAsyncData(
 		.where('stem', 'LIKE', 'posts/%'),
 )
 
-// TODO: 优化中文分词逻辑
 const miniSearch = new MiniSearch({
 	fields: ['title', 'content'],
 	storeFields: ['title', 'titles', 'content', 'level'],
