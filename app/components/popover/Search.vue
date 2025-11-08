@@ -5,6 +5,23 @@ const props = defineProps<{
 	show?: boolean
 }>()
 
+// 创建中文分词器（如果浏览器支持）
+const segmenter = Intl.Segmenter ? new Intl.Segmenter('zh', { granularity: 'word' }) : null
+
+// 自定义分词函数，支持中英文混合文本
+function tokenize(text: string): string[] {
+	// 如果支持Intl.Segmenter且是中文内容，使用它进行分词
+	if (segmenter) {
+		const segments = segmenter.segment(text)
+		return Array.from(segments)
+			.filter(seg => seg.isWordLike) // 只保留词语片段
+			.map(seg => seg.segment)
+	}
+
+	// 否则使用默认的分词方式（按空格和标点符号分割）
+	return text.toLowerCase().split(/[\s\p{P}\p{S}]+/u).filter(Boolean)
+}
+
 // await 会阻塞渲染
 const { data, status } = useAsyncData(
 	'search',
@@ -17,9 +34,13 @@ const { data, status } = useAsyncData(
 const miniSearch = new MiniSearch({
 	fields: ['title', 'content'],
 	storeFields: ['title', 'titles', 'content', 'level'],
+	// 使用自定义的分词函数
+	tokenize,
+	// 搜索时也使用相同的分词逻辑
 	searchOptions: {
 		prefix: true,
 		fuzzy: 0.2,
+		tokenize,
 	},
 })
 
@@ -29,7 +50,19 @@ const searchInput = ref<HTMLInputElement>()
 const { word } = storeToRefs(searchStore)
 const result = computed(() => {
 	void data.value
-	return miniSearch.search(word.value)
+	const searchResults = miniSearch.search(word.value)
+
+	// 按照level排序，level=1的文章类型结果优先显示
+	return searchResults.sort((a, b) => {
+		// 如果其中一个level是1（文章），另一个不是，则level为1的排在前面
+		if (a.level === 1 && b.level !== 1)
+			return -1
+		if (b.level === 1 && a.level !== 1)
+			return 1
+
+		// 如果两个都是文章或都不是文章，则按默认评分排序
+		return b.score - a.score
+	})
 })
 
 const isKeyboardMode = ref(false)
@@ -144,98 +177,98 @@ function openActiveItem() {
 
 <style lang="scss" scoped>
 .z-search {
-	--float-distance: 20vh;
+  --float-distance: 20vh;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: fixed;
-	inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
 }
 
 @keyframes scan {
-	0% { left: -100%; }
-	100% { left: 150%; }
+  0% { left: -100%; }
+  100% { left: 150%; }
 }
 
 #z-search {
-	overflow: hidden;
-	width: 95%;
-	max-width: $breakpoint-mobile;
-	border: 1px solid var(--c-primary);
-	border-radius: 1em;
-	box-shadow: 0 0.5em 1em var(--ld-shadow);
-	background-color: var(--ld-bg-card);
-	transition: all var(--delay, 200);
-	z-index: 1000;
+  overflow: hidden;
+  width: 95%;
+  max-width: $breakpoint-mobile;
+  border: 1px solid var(--c-primary);
+  border-radius: 1em;
+  box-shadow: 0 0.5em 1em var(--ld-shadow);
+  background-color: var(--ld-bg-card);
+  transition: all var(--delay, 200);
+  z-index: 1000;
 }
 
 #z-search-bgmask {
-	position: fixed;
-	inset: 0;
-	background-color: #0003;
-	backdrop-filter: blur(0.2em);
-	transition: backdrop-filter 1s;
-	transition: opacity var(--delay, 200);
-	z-index: 100;
+  position: fixed;
+  inset: 0;
+  background-color: #0003;
+  backdrop-filter: blur(0.2em);
+  transition: backdrop-filter 1s;
+  transition: opacity var(--delay, 200);
+  z-index: 100;
 
-	&.v-enter-from,
-	&.v-leave-to {
-		opacity: 0;
-	}
+  &.v-enter-from,
+  &.v-leave-to {
+    opacity: 0;
+  }
 }
 
 .input {
-	display: flex;
-	align-items: center;
-	gap: 1em;
-	position: relative;
-	padding: 0 1em;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  position: relative;
+  padding: 0 1em;
 
-	> .search-input {
-		width: 100%;
-		padding: 1em 0;
-		outline: none;
-	}
+  > .search-input {
+    width: 100%;
+    padding: 1em 0;
+    outline: none;
+  }
 }
 
 .no-result {
-	// 设置 max-height 时不要设置 padding
-	max-height: 5em;
-	padding: 1em 1em 2em;
-	text-align: center;
-	color: var(--c-text-3);
-	transition: all 0.5s;
+  // 设置 max-height 时不要设置 padding
+  max-height: 5em;
+  padding: 1em 1em 2em;
+  text-align: center;
+  color: var(--c-text-3);
+  transition: all 0.5s;
 }
 
 .search-result {
-	max-height: 75vh;
-	max-height: 75dvh;
-	transition: all 0.5s;
-	scroll-padding: 2rem;
+  max-height: 75vh;
+  max-height: 75dvh;
+  transition: all 0.5s;
+  scroll-padding: 2rem;
 }
 
 .search-item {
-	transition: background-color 0.1s, opacity 0.2s;
+  transition: background-color 0.1s, opacity 0.2s;
 }
 
 .tip {
-	max-height: 1rem;
-	margin: 0 1em 0.5rem;
-	font-size: 0.8em;
-	text-align: center;
-	color: var(--c-text-3);
-	transition: all 0.5s;
+  max-height: 1rem;
+  margin: 0 1em 0.5rem;
+  font-size: 0.8em;
+  text-align: center;
+  color: var(--c-text-3);
+  transition: all 0.5s;
 }
 
 .expand-enter-active,
 .expand-leave-active {
-	transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .expand-enter-from,
 .expand-leave-to {
-	opacity: 0;
-	max-height: 0;
+  opacity: 0;
+  max-height: 0;
 }
 </style>
