@@ -1,5 +1,5 @@
 {
-  "recommendations": [
+  "wantedRecommendations": [
     "antfu.iconify",
     "antfu.pnpm-catalog-lens",
     "dbaeumer.vscode-eslint",
@@ -10,16 +10,5 @@
     "usernamehw.errorlens",
     "Vue.volar",
     "YoavBls.pretty-ts-errors"
-  ],
-  "unwantedRecommendations": [
-    "christian-kohler.npm-intellisense",
-    "DavidAnson.vscode-markdownlint",
-    "donjayamanne.githistory",
-    "eamodio.gitlens",
-    "firefox-devtools.vscode-firefox-debug",
-    "GitHub.copilot",
-    "ms-azuretools.vscode-containers",
-    "ms-azuretools.vscode-docker",
-    "ms-edgedevtools.vscode-edge-devtools"
   ]
 }

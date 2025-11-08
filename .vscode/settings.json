@@ -2,12 +2,6 @@
   "[css]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "[markdown]": {
-    "editor.suggest.snippetsPreventQuickSuggestions": true,
-    "editor.suggest.showSnippets": true,
-    "editor.snippetSuggestions": "top",
-    "editor.suggest.showWords": false
-  },
   "[mdc]": {
     "editor.defaultFormatter": "Nuxt.mdc",
     "files.autoGuessEncoding": false
@@ -16,12 +10,13 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[yaml]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "always"
   },
+  "editor.tabSize": 3,
   "errorLens.fontSize": ".8em",
   "errorLens.messageBackgroundMode": "message",
   "errorLens.messageMaxChars": 50,
@@ -40,7 +35,5 @@
   "vue.inlayHints.inlineHandlerLeading": true,
   "vue.inlayHints.missingProps": true,
   "vue.inlayHints.vBindShorthand": true,
-  "yaml.format.singleQuote": true,
-  "editor.fontLigatures": true,
-  "editor.mouseWheelZoom": true
+  "yaml.format.singleQuote": true
 }
