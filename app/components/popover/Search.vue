@@ -27,7 +27,8 @@ const { data, status } = useAsyncData(
 	'search',
 	() => queryCollectionSearchSections('content', {
 		ignoredTags: ['pre'],
-	}),
+	})
+		.where('stem', 'LIKE', 'posts/%'),
 )
 
 // TODO: 优化中文分词逻辑
