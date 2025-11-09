@@ -3,7 +3,7 @@ title: 宿命感、救赎感、氛围感，到底是什么？
 description: 从抖音热门现象到经典文学作品，拆解当下最戳人的三种情感内核，我们为何会为这些感觉反复上头。
 date: 2025-11-02 19:43:53
 updated: 2025-11-02 19:43:53
-image: https://s2.loli.net/2025/11/08/Zs5PmNnaML39gKw.png
+image: https://s2.loli.net/2025/11/09/VZU2MyHNjwCGIYE.png
 type: story
 categories: [杂谈]
 tags: [抖音, 网络]
