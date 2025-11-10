@@ -125,7 +125,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 		<TransitionGroup name="moment-float-in">
 			<div
 				v-for="(moment, index) in moments"
-				:key="index"
+				:key="moment.id || index"
 				class="moment-item moment-card"
 				:style="{ '--delay': `${index * 0.05}s` }"
 			>
@@ -148,7 +148,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 					<div v-if="moment.image && moment.image.length > 0 && !extractBilibiliId(moment.text)" class="moment-images">
 						<div
 							v-for="(img, imgIndex) in moment.image.filter(img => !isTelegramEmoji(img))"
-							:key="imgIndex"
+							:key="`${moment.id || index}-${imgIndex}`"
 							class="moment-image"
 						>
 							<Pic :src="img" :caption="`图片${imgIndex + 1}`" :zoom="true" />
@@ -282,7 +282,8 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 // 单张图片容器样式
 .moment-image {
 	img {
-		width: 24px;
+		width: 100%;
+		height: 100px;
 		transition: transform 0.2s;
 		object-fit: cover;
 

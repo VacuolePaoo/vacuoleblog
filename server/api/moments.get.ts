@@ -25,17 +25,12 @@ export default defineCachedEventHandler(async (_event) => {
 			return []
 		}
 
-		// 过滤掉 views 为 null 的说说
-		const filteredMoments: Moment[] = response.ChannelMessageData.filter(
-			(moment: any) => {
-				return moment.views !== null && moment.views !== undefined
-			},
-		)
+		// 过滤掉 views 为 null 的说说，并按时间倒序排列（最新的在前面）
+		const filteredMoments: Moment[] = response.ChannelMessageData
+			.filter((moment: any) => moment.views !== null && moment.views !== undefined)
+			.sort((a: Moment, b: Moment) => b.time - a.time)
 
-		// 按时间倒序排列（最新的在前面）
-		return filteredMoments.sort((a: Moment, b: Moment) => {
-			return b.time - a.time
-		})
+		return filteredMoments
 	}
 	catch (err) {
 		console.error('获取说说数据失败:', err)
@@ -43,5 +38,5 @@ export default defineCachedEventHandler(async (_event) => {
 		return []
 	}
 }, {
-	maxAge: 60 * 5, // 5分钟缓存
+	maxAge: 60 * 10, // 将缓存时间从5分钟增加到10分钟，减少API请求频率
 })
