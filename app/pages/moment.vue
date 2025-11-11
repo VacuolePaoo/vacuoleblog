@@ -38,38 +38,53 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'comm-group'])
 
-// 获取说说数据
-const { data: moments, pending, error } = await useAsyncData(
-	'moments',
-	async () => {
-		try {
-			const response = await fetch('https://api1.vacu.top')
-			const data = await response.json()
+// 初始化数据状态
+const moments = ref<Moment[]>([])
+const pending = ref(true)
+const error = ref(false)
 
-			// 确保数据存在且有ChannelMessageData字段
-			if (!data || !data.ChannelMessageData || !Array.isArray(data.ChannelMessageData)) {
-				console.warn('返回数据格式不正确:', data)
-				return []
-			}
+// 获取说说数据的函数
+async function fetchMoments() {
+	pending.value = true
+	error.value = false
 
-			// 过滤掉 views 为 null 的说说
-			const filteredMoments: Moment[] = data.ChannelMessageData.filter(
-				(moment: any) => {
-					return moment.views !== null && moment.views !== undefined
-				},
-			)
+	try {
+		const response = await fetch('https://api1.vacu.top')
+		const data = await response.json()
 
-			// 按时间倒序排列（最新的在前面）
-			return filteredMoments.sort((a: Moment, b: Moment) => {
-				return b.time - a.time
-			})
+		// 确保数据存在且有ChannelMessageData字段
+		if (!data || !data.ChannelMessageData || !Array.isArray(data.ChannelMessageData)) {
+			console.warn('返回数据格式不正确:', data)
+			moments.value = []
+			return
 		}
-		catch (err) {
-			console.error('获取说说数据失败:', err)
-			return []
-		}
-	},
-)
+
+		// 过滤掉 views 为 null 的说说
+		const filteredMoments = data.ChannelMessageData.filter(
+			(moment: Moment) => {
+				return moment.views !== null && moment.views !== undefined
+			},
+		)
+
+		// 按时间倒序排列（最新的在前面）
+		moments.value = filteredMoments.sort((a: Moment, b: Moment) => {
+			return b.time - a.time
+		})
+	}
+	catch (err) {
+		console.error('获取说说数据失败:', err)
+		error.value = true
+		moments.value = []
+	}
+	finally {
+		pending.value = false
+	}
+}
+
+// 在客户端挂载后获取数据
+onMounted(() => {
+	fetchMoments()
+})
 
 // 滚动到评论区并填充内容
 function scrollToCommentsAndQuote(moment: Moment, event: Event) {
