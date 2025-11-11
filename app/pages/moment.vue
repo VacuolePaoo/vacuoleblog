@@ -38,44 +38,38 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'comm-group'])
 
-// 初始化空数据
-const moments = ref<Moment[]>([])
-const pending = ref(true)
-const error = ref(false)
-
 // 获取说说数据
-async function fetchMoments() {
-	pending.value = true
-	error.value = false
+const { data: moments, pending, error } = await useAsyncData(
+	'moments',
+	async () => {
+		try {
+			const response = await fetch('https://api1.vacu.top')
+			const data = await response.json()
 
-	try {
-		const response = await fetch('/api/moments')
-		const data = await response.json()
+			// 确保数据存在且有ChannelMessageData字段
+			if (!data || !data.ChannelMessageData || !Array.isArray(data.ChannelMessageData)) {
+				console.warn('返回数据格式不正确:', data)
+				return []
+			}
 
-		// 检查数据是否有效
-		if (!Array.isArray(data)) {
-			console.warn('返回数据格式不正确:', data)
-			moments.value = []
-			return
+			// 过滤掉 views 为 null 的说说
+			const filteredMoments: Moment[] = data.ChannelMessageData.filter(
+				(moment: any) => {
+					return moment.views !== null && moment.views !== undefined
+				},
+			)
+
+			// 按时间倒序排列（最新的在前面）
+			return filteredMoments.sort((a: Moment, b: Moment) => {
+				return b.time - a.time
+			})
 		}
-
-		// 设置数据
-		moments.value = data
-	}
-	catch (err) {
-		console.error('获取说说数据失败:', err)
-		error.value = true
-		moments.value = []
-	}
-	finally {
-		pending.value = false
-	}
-}
-
-// 在客户端挂载后获取数据
-onMounted(() => {
-	fetchMoments()
-})
+		catch (err) {
+			console.error('获取说说数据失败:', err)
+			return []
+		}
+	},
+)
 
 // 滚动到评论区并填充内容
 function scrollToCommentsAndQuote(moment: Moment, event: Event) {
@@ -125,7 +119,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 		<TransitionGroup name="moment-float-in">
 			<div
 				v-for="(moment, index) in moments"
-				:key="moment.id || index"
+				:key="index"
 				class="moment-item moment-card"
 				:style="{ '--delay': `${index * 0.05}s` }"
 			>
@@ -148,7 +142,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 					<div v-if="moment.image && moment.image.length > 0 && !extractBilibiliId(moment.text)" class="moment-images">
 						<div
 							v-for="(img, imgIndex) in moment.image.filter(img => !isTelegramEmoji(img))"
-							:key="`${moment.id || index}-${imgIndex}`"
+							:key="imgIndex"
 							class="moment-image"
 						>
 							<Pic :src="img" :caption="`图片${imgIndex + 1}`" :zoom="true" />
@@ -282,8 +276,7 @@ function scrollToCommentsAndQuote(moment: Moment, event: Event) {
 // 单张图片容器样式
 .moment-image {
 	img {
-		width: 100%;
-		height: 100px;
+		width: 24px;
 		transition: transform 0.2s;
 		object-fit: cover;
 
