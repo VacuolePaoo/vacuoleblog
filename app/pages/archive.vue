@@ -53,6 +53,7 @@ const yearlyWordCount = computed(() => {
 			</h2>
 
 			<div class="archive-age">
+				<span class="age-label">我的</span>
 				<span>{{ Number(year) - birthYear }}</span>
 				<span class="age-label">岁</span>
 			</div>
