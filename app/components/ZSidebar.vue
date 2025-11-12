@@ -41,7 +41,8 @@ const { word } = storeToRefs(searchStore)
 
 	<footer class="sidebar-footer">
 		<ThemeToggle />
-		<ZIconNavList :list="appConfig.footer.iconNav" />
+		<!-- <ZIconNavList :list="appConfig.footer.iconNav" /> -->
+		<br>
 	</footer>
 </aside>
 </template>
