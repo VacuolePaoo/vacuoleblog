@@ -251,6 +251,9 @@ importers:
       plain-shiki:
         specifier: catalog:content
         version: 0.3.1(shiki@3.13.0)
+      postcss-html:
+        specifier: ^1.8.0
+        version: 1.8.0
       radash:
         specifier: catalog:util
         version: 12.1.1

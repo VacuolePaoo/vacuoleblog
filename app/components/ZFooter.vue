@@ -1,33 +1,8 @@
 <script setup lang="ts">
-import feeds from '../feeds'
-
 const appConfig = useAppConfig()
 
-// 从feeds中随机选择4个友链
-const randomFeeds = ref<any[]>([])
 const hitokoto = ref('')
 const showHitokoto = ref(false)
-
-// 初始化随机友链
-function initializeRandomFeeds() {
-	// 收集所有友链条目
-	const allFeeds = feeds.flatMap((group: any) =>
-		group.entries.map((entry: any) => ({
-			id: entry.link,
-			text: entry.author,
-			url: entry.link,
-			icon: 'ph:link-bold',
-		})),
-	)
-
-	// 使用 Fisher-Yates 洗牌算法进行随机排序并取前4个
-	for (let i = allFeeds.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[allFeeds[i], allFeeds[j]] = [allFeeds[j], allFeeds[i]]
-	}
-
-	randomFeeds.value = allFeeds.slice(0, 4)
-}
 
 // 获取一言
 async function fetchHitokoto() {
@@ -44,13 +19,7 @@ async function fetchHitokoto() {
 }
 
 // 页面加载时初始化
-initializeRandomFeeds()
 fetchHitokoto()
-
-// 刷新随机友链
-// function refreshFeeds() {
-// 	initializeRandomFeeds()
-// }
 </script>
 
 <template>
@@ -69,29 +38,6 @@ fetchHitokoto()
 				</li>
 			</menu>
 		</div>
-
-		<!-- 随机友链展示 -->
-		<!-- <div class="footer-nav-group">
-			<h3>
-				友链
-				<button aria-label="刷新" class="refresh-button" title="刷新友链" @click="refreshFeeds">
-					<Icon name="ph:arrow-clockwise-bold" />
-				</button>
-			</h3>
-			<menu>
-				<li v-for="feed in randomFeeds" :key="feed.id">
-					<ZRawLink :to="feed.url" external>
-						<Icon :name="feed.icon" />
-						<span class="nav-text">{{ feed.text }}</span>
-					</ZRawLink>
-				</li>
-				<li>
-					<ZRawLink to="/link" external>
-						<span class="nav-text">更多...</span>
-					</ZRawLink>
-				</li>
-			</menu>
-		</div> -->
 	</nav>
 	<p v-html="appConfig.footer.copyright" />
 	<p class="hitokoto" :class="{ 'hitokoto-fade-in': showHitokoto }">
@@ -102,9 +48,16 @@ fetchHitokoto()
 
 <style lang="scss" scoped>
 .z-footer {
+	opacity: 0.3;
 	margin: 3rem 1rem;
 	font-size: 0.9em;
 	color: var(--c-text-2);
+	transition: opacity 0.3s ease; // 添加过渡动画
+
+	// hover时透明度恢复为1
+	&:hover {
+		opacity: 1;
+	}
 
 	.footer-nav {
 		display: flex;

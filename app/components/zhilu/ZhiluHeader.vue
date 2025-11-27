@@ -5,13 +5,13 @@ const appConfig = useAppConfig()
 <template>
 <ZRawLink class="zhilu-header">
 	<div v-if="appConfig.header.emojiTail" class="emoji-tail">
-		<span
+		<!-- <span
 			v-for="(emoji, emojiIndex) in appConfig.header.emojiTail"
 			:key="emojiIndex"
 			class="split-char"
 			:style="{ '--delay': `${emojiIndex * .6 - 3}s` }"
 			v-text="emoji"
-		/>
+		/> -->
 	</div>
 	<NuxtImg
 		:src="appConfig.header.logo"
@@ -53,7 +53,7 @@ const appConfig = useAppConfig()
 
 	&.circle {
 		width: 3em;
-		border-radius: 2em;
+		border-radius: 1rem;
 		box-shadow: 2px 4px 1rem var(--ld-shadow);
 	}
 }
