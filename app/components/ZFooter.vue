@@ -3,6 +3,7 @@ const appConfig = useAppConfig()
 
 const hitokoto = ref('')
 const showHitokoto = ref(false)
+const footerVisible = ref(false)
 
 // 获取一言
 async function fetchHitokoto() {
@@ -18,12 +19,35 @@ async function fetchHitokoto() {
 	}
 }
 
+// 创建 Intersection Observer
+onMounted(() => {
+	const footerElement = document.querySelector('.z-footer')
+	if (!footerElement)
+		return
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			// 当footer可见比例超过50%时，设置为可见
+			footerVisible.value = entry.intersectionRatio > 0.9
+		})
+	}, {
+		threshold: [0, 0.5, 1], // 在0%, 50%, 100%时触发回调
+	})
+
+	observer.observe(footerElement)
+
+	// 组件卸载时停止观察
+	onUnmounted(() => {
+		observer.disconnect()
+	})
+})
+
 // 页面加载时初始化
 fetchHitokoto()
 </script>
 
 <template>
-<footer class="z-footer">
+<footer class="z-footer" :class="{ visible: footerVisible }">
 	<nav class="footer-nav">
 		<div v-for="(group, groupIndex) in appConfig.footer.nav" :key="groupIndex" class="footer-nav-group">
 			<h3 v-if="group.title">
@@ -52,10 +76,10 @@ fetchHitokoto()
 	margin: 3rem 1rem;
 	font-size: 0.9em;
 	color: var(--c-text-2);
-	transition: opacity 0.3s ease; // 添加过渡动画
+	transition: opacity 0.3s ease;
 
-	// hover时透明度恢复为1
-	&:hover {
+	// 当footer可见时透明度恢复为1
+	&.visible {
 		opacity: 1;
 	}
 
@@ -87,21 +111,6 @@ fetchHitokoto()
 				background-color: var(--c-bg-soft);
 				color: var(--c-text);
 			}
-		}
-	}
-
-	.refresh-button {
-		padding: 0.2em;
-		border: none;
-		border-radius: 0.3em;
-		background: none;
-		color: var(--c-text-2);
-		transition: background-color 0.2s, color 0.1s;
-		cursor: pointer;
-
-		&:hover {
-			background-color: var(--c-bg-soft);
-			color: var(--c-text);
 		}
 	}
 

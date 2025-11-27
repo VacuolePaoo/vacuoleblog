@@ -1,6 +1,6 @@
 ---
-title: Python学习笔记：基本数据处理
-description: 高中的信息技术课是我第一次系统地学习Python，但我在此基础上进行了额外学习，本文是我的Python学习笔记
+title: Python学习笔记：最最基础的数据处理
+description: 本文为高中“信息技术”课的笔记
 date: 2025-10-16 23:50:12
 updated: 2025-10-16 23:50:12
 categories:
