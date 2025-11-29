@@ -36,6 +36,13 @@ const rssInfo = {
 		'支持所有主流RSS客户端',
 	],
 }
+
+const mastodonInfo = {
+	title: 'Mastodon',
+	description: '在去中心化的社交网络 Mastodon 上关注我，获取更多动态。',
+	profileUrl: 'https://mastodon.social/@vacuole',
+	username: '@vacuole@mastodon.social',
+}
 </script>
 
 <template>
@@ -120,6 +127,31 @@ const rssInfo = {
 				</ul>
 			</div>
 		</div>
+
+		<!-- Mastodon 订阅卡片 -->
+		<div class="subscribe-card mastodon-card">
+			<div class="card-header">
+				<h2>{{ mastodonInfo.title }}</h2>
+				<p class="card-description">
+					{{ mastodonInfo.description }}
+				</p>
+			</div>
+
+			<div class="card-content">
+				<ZRawLink
+					:to="mastodonInfo.profileUrl"
+					class="profile-button"
+					target="_blank"
+				>
+					<Icon name="ph:at-bold" class="profile-icon" />
+					<div class="profile-info">
+						<span class="profile-name">访问我的主页</span>
+						<span class="profile-username">{{ mastodonInfo.username }}</span>
+					</div>
+					<Icon name="ph:arrow-right-bold" class="arrow-icon" />
+				</ZRawLink>
+			</div>
+		</div>
 	</div>
 </div>
 </template>
@@ -179,6 +211,65 @@ const rssInfo = {
 
 				.feed-icon {
 					color: #2ECC71;
+				}
+			}
+		}
+
+		&.mastodon-card {
+			color: var(--c-text-1);
+
+			.card-header h2 {
+				color: #6364FF;
+			}
+
+			.card-description {
+				color: var(--c-text-2);
+			}
+
+			.tip-icon {
+				color: #6364FF;
+			}
+
+			.profile-button {
+				display: flex;
+				align-items: center;
+				padding: 1rem;
+				border: 1px solid transparent;
+				border-radius: 0.5rem;
+				background: rgba(#6364FF, 0.1);
+				text-decoration: none;
+				color: var(--c-text-1);
+				transition: all 0.3s ease;
+
+				&:hover {
+					border-color: rgba(#6364FF, 0.3);
+					background: rgba(#6364FF, 0.2);
+				}
+
+				.profile-icon {
+					margin-right: 1rem;
+					font-size: 1.5rem;
+					color: #6364FF;
+				}
+
+				.profile-info {
+					flex: 1;
+
+					.profile-name {
+						display: block;
+						margin-bottom: 0.2rem;
+						font-size: 1.1rem;
+						font-weight: 600;
+					}
+
+					.profile-username {
+						opacity: 0.9;
+						font-size: 0.9rem;
+					}
+				}
+
+				.arrow-icon {
+					font-size: 1.2rem;
 				}
 			}
 		}
