@@ -46,6 +46,7 @@
     "nuxt": "catalog:framework",
     "parse-domain": "catalog:util",
     "plain-shiki": "catalog:content",
+    "postcss-html": "^1.8.0",
     "radash": "catalog:util",
     "shiki": "catalog:content",
     "site-config-stack": "catalog:util",
