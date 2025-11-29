@@ -124,15 +124,15 @@ export default defineAppConfig({
 	themes: {
 		light: {
 			icon: 'ph:sun-bold',
-			tip: '浅色模式',
+			tip: '素光',
 		},
 		system: {
-			icon: 'ph:monitor-bold',
-			tip: '跟随系统',
+			icon: 'ph:lego-smiley-bold',
+			tip: '顺仪',
 		},
 		dark: {
 			icon: 'ph:moon-bold',
-			tip: '深色模式',
+			tip: '暗域',
 		},
 	},
 })

@@ -8,7 +8,7 @@ useSeoMeta({
 })
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'comm-group', 'wechat-card'])
+layoutStore.setAside(['blog-stats', 'comm-group'])
 
 const { data: listRaw } = await useArticleIndex()
 const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw)
