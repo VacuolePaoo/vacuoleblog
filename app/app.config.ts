@@ -9,7 +9,6 @@ import { version } from '~~/package.json'
 export default defineAppConfig({
 	// 将 blog.config 中的配置项复制到 appConfig，方便调用
 	...blogConfig,
-
 	component: {
 		alert: {
 			/** 默认使用卡片风格还是扁平风格 */

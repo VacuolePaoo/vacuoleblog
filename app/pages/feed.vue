@@ -26,6 +26,7 @@ const rssInfo = {
 		{
 			name: 'Atom订阅',
 			url: '/atom.xml',
+			link: 'https://blog.vacu.top/atom.xml',
 			description: '完整的Atom订阅源，支持现代RSS阅读器',
 		},
 	],
@@ -101,6 +102,13 @@ const rssInfo = {
 							</div>
 							<Icon name="ph:arrow-right-bold" class="arrow-icon" />
 						</ZRawLink>
+
+						<!-- 添加复制组件 -->
+						<Copy
+							prompt="订阅地址"
+							:code="feed.link"
+							style="margin-top: 0.5rem;"
+						/>
 					</div>
 				</div>
 
