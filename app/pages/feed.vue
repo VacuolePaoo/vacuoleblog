@@ -158,12 +158,9 @@ const mastodonInfo = {
 
 <style lang="scss" scoped>
 .subscribe-page {
+	overflow-x: hidden;
 	margin: 1rem;
 	padding: 1rem 0;
-
-	@media (max-width: 768px) {
-		margin: 0.5rem;
-	}
 
 	.cards-container {
 		display: grid;
@@ -173,6 +170,7 @@ const mastodonInfo = {
 		@media (max-width: 768px) {
 			grid-template-columns: 1fr;
 			gap: 1rem;
+			max-width: 100%;
 		}
 	}
 
@@ -415,6 +413,61 @@ const mastodonInfo = {
 				}
 			}
 		}
+	}
+}
+
+/* —— 下面是移动端修复部分 —— */
+@media (max-width: 768px) {
+	.subscribe-page {
+		margin: 0;
+		padding: 0 1rem;
+	}
+
+	.subscribe-card {
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.subscribe-card *,
+	.card-content *,
+	.feed-link,
+	.profile-button {
+		overflow-x: hidden;
+		max-width: 100%;
+	}
+}
+
+/* —— 强制所有元素在小屏可缩小，根治右侧溢出 —— */
+@media (max-width: 480px) {
+	.subscribe-page {
+		overflow-x: hidden;
+	}
+
+	.subscribe-card,
+	.subscribe-card * {
+		min-width: 0; /* flex 默认 min-width:auto 会撑爆 */
+	}
+
+	/* 限制所有行内块元素/图标的最大宽度 */
+	img, svg, .feed-icon, .profile-icon, .arrow-icon {
+		height: auto;
+		max-width: 100%;
+	}
+
+	/* 让 feed-link、profile-button 可以缩小 */
+	.feed-link,
+	.profile-button {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		min-width: 0;
+		box-sizing: border-box;
+	}
+
+	/* 外层容器收紧到安全范围 */
+	.subscribe-page {
+		margin: 0;
+		padding: 0 0.75rem;
 	}
 }
 </style>
