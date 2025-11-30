@@ -52,39 +52,27 @@ export default defineAppConfig({
 		/** 页脚站点地图 */
 		nav: [
 			{
-				title: '探索',
+				title: 'Explore',
 				items: [
-					{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
 					{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/go-by-clouds.html' },
-					{ icon: 'ph:binoculars-bold', text: '发现博客', url: 'https://bf.zzxworld.com/' },
+					{ icon: 'ph:binoculars-bold', text: 'BlogFinder', url: 'https://bf.zzxworld.com/' },
 					{ icon: 'ph:flying-saucer-bold', text: '异次元旅行', url: 'https://travel.moe/go.html?travel=on' },
 				],
 			},
 			{
-				title: '页面',
+				title: 'Contact Me',
 				items: [
-					{ icon: 'ph:link-bold', text: '友情链接', url: '/link' },
-					// { icon: 'ph:quotes-bold', text: '即刻短文', url: '/moment' },
-				],
-			},
-			{
-				title: '社交',
-				items: [
-					{ icon: 'ant-design:bilibili-outlined', text: 'Bilibili', url: 'https://space.bilibili.com/518590350' },
-					{ icon: 'ph:wechat-logo-bold', text: 'VacuolePao', url: '/' },
-					{ icon: 'ph:github-logo-bold', text: 'Github', url: 'https://github.com/VacuolePaoo' },
-					{ icon: 'ph:discord-logo-bold', text: 'LadderHub', url: 'https://dc.vacu.top' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
+					{ icon: 'ph:github-logo-bold', text: 'Github', url: 'https://github.com/VacuolePaoo' },
+					{ icon: 'ant-design:bilibili-outlined', text: 'Bilibili', url: 'https://space.bilibili.com/518590350' },
+					{ icon: 'ph:discord-logo-bold', text: 'LadderHub', url: 'https://dc.vacu.top' },
 				],
 			},
 			{
-				title: '信息',
+				title: 'More',
 				items: [
-					{ icon: 'ph:shield-check-bold', text: '隐私政策', url: '/privacy' },
-					{ icon: 'ph:cookie-bold', text: 'Cookies', url: '/cookies' },
-					{ icon: 'ph:copyleft-bold', text: '版权协议', url: '/license' },
-					{ icon: 'ph:bird-bold', text: '关于主题', url: '/theme' },
-					{ icon: 'ph:dev-to-logo-bold', text: '技术架构', url: '/arch' },
+					{ icon: 'ph:palette-bold', text: '关于本站', url: '/blog' },
+					{ icon: 'ph:bell-ringing-bold', text: '订阅', url: '/feed' },
 				],
 			},
 		] satisfies Nav,

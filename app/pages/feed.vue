@@ -161,6 +161,10 @@ const mastodonInfo = {
 	margin: 1rem;
 	padding: 1rem 0;
 
+	@media (max-width: 768px) {
+		margin: 0.5rem;
+	}
+
 	.cards-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

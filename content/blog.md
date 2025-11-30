@@ -10,7 +10,7 @@ github:
   url: https://github.com/VacuolePaoo/vacuoleblog
 ---
 
-## 主题特性
+## 用户体验
 
 ::card-list
 - **响应式设计和夜间模式**：支持移动端和桌面端，同时适配系统颜色偏好，确保在不同设备上都能提供良好的阅读体验。
@@ -44,3 +44,35 @@ github:
 - 技术文章标题左对齐，正文无缩进。
 - 故事类文章标题居中且使用衬线体，正文有缩进。
 ::
+
+## 技术架构
+
+- **即刻短文**：自部署接口，基于Cloudflare worker和K1 SQL
+- **页脚一言**： :badge[一言Hitokoto]{link="https://hitokoto.cn/"}
+
+
+::card-list
+
+- 内容与服务
+  - **内容管理**：Nuxt Content v3
+  - **部署平台**Vercel
+  - **评论系统**：Twikoo
+  - **图床**：SMMS
+  - **评论数据库**：MongoDB
+  - **包管理器**：pnpm
+- 工具库
+  - **日期处理**：date-fns
+  - **轮播图**：Embla Carousel
+  - **订阅源生成**：Fast XML Parser
+  - **域名解析**：parse-domain
+  - **动态代码高亮**：Plain Shiki
+  - **实用算法片段库**：Radash
+  - **悬浮组件库**：Vue Tippy
+- 依赖模块
+  - **图标管理**：Nuxt Icon、Iconify
+  - **颜色模式**：Nuxt Color Mode
+  - **SEO优化**：Nuxt SEO
+  - **状态管理**：Pinia
+  - **Vue 实用功能库**：VueUse
+  - **代码质量**：ESLint + Stylelint
+  - **代码压缩**：Terser
