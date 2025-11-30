@@ -43,6 +43,13 @@ const mastodonInfo = {
 	profileUrl: 'https://mastodon.social/@vacuole',
 	username: '@vacuole@mastodon.social',
 }
+
+const sspaiInfo = {
+	title: '少数派',
+	description: '高效工作，品质生活。在少数派关注我，获取更多优质内容。',
+	profileUrl: 'https://sspai.com/u/vacuole/updates',
+	username: '液泡',
+}
 </script>
 
 <template>
@@ -152,6 +159,31 @@ const mastodonInfo = {
 				</ZRawLink>
 			</div>
 		</div>
+
+		<!-- 少数派 订阅卡片 -->
+		<div class="subscribe-card sspai-card">
+			<div class="card-header">
+				<h2>{{ sspaiInfo.title }}</h2>
+				<p class="card-description">
+					{{ sspaiInfo.description }}
+				</p>
+			</div>
+
+			<div class="card-content">
+				<ZRawLink
+					:to="sspaiInfo.profileUrl"
+					class="profile-button"
+					target="_blank"
+				>
+					<Icon name="ph:at-bold" class="profile-icon" />
+					<div class="profile-info">
+						<span class="profile-name">访问我的主页</span>
+						<span class="profile-username">{{ sspaiInfo.username }}</span>
+					</div>
+					<Icon name="ph:arrow-right-bold" class="arrow-icon" />
+				</ZRawLink>
+			</div>
+		</div>
 	</div>
 </div>
 </template>
@@ -252,6 +284,65 @@ const mastodonInfo = {
 					margin-right: 1rem;
 					font-size: 1.5rem;
 					color: #6364FF;
+				}
+
+				.profile-info {
+					flex: 1;
+
+					.profile-name {
+						display: block;
+						margin-bottom: 0.2rem;
+						font-size: 1.1rem;
+						font-weight: 600;
+					}
+
+					.profile-username {
+						opacity: 0.9;
+						font-size: 0.9rem;
+					}
+				}
+
+				.arrow-icon {
+					font-size: 1.2rem;
+				}
+			}
+		}
+
+		&.sspai-card {
+			color: var(--c-text-1);
+
+			.card-header h2 {
+				color: #D24A4A;
+			}
+
+			.card-description {
+				color: var(--c-text-2);
+			}
+
+			.tip-icon {
+				color: #D24A4A;
+			}
+
+			.profile-button {
+				display: flex;
+				align-items: center;
+				padding: 1rem;
+				border: 1px solid transparent;
+				border-radius: 0.5rem;
+				background: rgba(#D24A4A, 0.1);
+				text-decoration: none;
+				color: var(--c-text-1);
+				transition: all 0.3s ease;
+
+				&:hover {
+					border-color: rgba(#D24A4A, 0.3);
+					background: rgba(#D24A4A, 0.2);
+				}
+
+				.profile-icon {
+					margin-right: 1rem;
+					font-size: 1.5rem;
+					color: #D24A4A;
 				}
 
 				.profile-info {
@@ -454,14 +545,31 @@ const mastodonInfo = {
 		max-width: 100%;
 	}
 
-	/* 让 feed-link、profile-button 可以缩小 */
+	/* 让 feed-link、profile-button 可以缩小，但保持内部元素在一行 */
 	.feed-link,
 	.profile-button {
 		display: flex;
-		flex-wrap: wrap;
+		align-items: center;
 		width: 100%;
 		min-width: 0;
 		box-sizing: border-box;
+	}
+
+	/* 确保图标不会被压缩 */
+	.feed-icon,
+	.profile-icon,
+	.arrow-icon {
+		flex-shrink: 0;
+	}
+
+	.feed-info {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.profile-info {
+		flex: 1;
+		min-width: 0;
 	}
 
 	/* 外层容器收紧到安全范围 */
