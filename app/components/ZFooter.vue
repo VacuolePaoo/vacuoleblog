@@ -28,7 +28,7 @@ onMounted(() => {
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach((entry) => {
 			// 当footer可见比例超过50%时，设置为可见
-			footerVisible.value = entry.intersectionRatio > 0.9
+			footerVisible.value = entry.intersectionRatio > 0.5
 		})
 	}, {
 		threshold: [0, 0.5, 1], // 在0%, 50%, 100%时触发回调
