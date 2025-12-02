@@ -71,8 +71,8 @@ export default defineAppConfig({
 			{
 				title: 'More',
 				items: [
-					{ icon: 'ph:palette-bold', text: '关于本站', url: '/blog' },
-					{ icon: 'ph:bell-ringing-bold', text: '订阅', url: '/feed' },
+					{ icon: 'ph:info-bold', text: '关于本站', url: '/blog' },
+					{ icon: 'ph:bell-simple-bold', text: '订阅', url: '/feed' },
 				],
 			},
 		] satisfies Nav,
