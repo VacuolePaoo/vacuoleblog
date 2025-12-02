@@ -10,7 +10,8 @@ github:
   url: https://github.com/VacuolePaoo/vacuoleblog
 ---
 
-$${\huge Clarity \to Cellarity} $$
+$${\large Clarity \to Cellarity} $$
+
 $$基于纸鹿Clarity主题$$
 
 ## 用户体验
