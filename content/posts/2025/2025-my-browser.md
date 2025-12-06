@@ -10,6 +10,8 @@ tags: [浏览器, 日常]
 
 > 和大部分人使用浏览器书签或者导航类网站索引自己的常用网站不同，我强烈依赖基于浏览器地址栏自动补全来访问我常用的网站。那么，将 A-Z 逐一输入到 Google Chrome 的地址栏里，我的 Google Chrome 都会自动补全出哪些域名呢？
 
+![](https://s2.loli.net/2025/12/06/JIcSFzRNOdG7txg.jpg)
+
 ## A
 
 **api.toubiec.cn**
